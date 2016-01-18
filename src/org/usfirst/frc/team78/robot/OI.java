@@ -1,9 +1,12 @@
 package org.usfirst.frc.team78.robot;
-
+ 
 import edu.wpi.first.wpilibj.Joystick;
 
 import edu.wpi.first.wpilibj.buttons.Button;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
+
 import org.usfirst.frc.team78.robot.commands.ExampleCommand;
+import org.usfirst.frc.team78.robot.commands.HeadingCorrection;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -11,12 +14,20 @@ import org.usfirst.frc.team78.robot.commands.ExampleCommand;
  */
 public class OI {
 	
-	public Joystick driverStick;
+	//JOYSTICKS
+	public Joystick driverStick; 
 	
+	//BUTTONS
+	public Button btnHoldHeading;
+	
+	//CONSTANTS
 	final static double STICK_DEADZONE = 0.05;
 	
 	public OI(){
 		driverStick = new Joystick(0);
+		
+		btnHoldHeading = new JoystickButton(driverStick, 2);
+		btnHoldHeading.whileHeld(new HeadingCorrection());
 	}
 	
 	///DRIVER STICK
@@ -35,7 +46,7 @@ public class OI {
 			return 0;
 		}
 		else
-			return stick;
+			return stick; 
 	}
 	
     //// CREATING BUTTONS

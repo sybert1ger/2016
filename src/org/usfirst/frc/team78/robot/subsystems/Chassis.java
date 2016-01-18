@@ -6,6 +6,8 @@ import org.usfirst.frc.team78.robot.Robot;
 import org.usfirst.frc.team78.robot.RobotMap;
 import org.usfirst.frc.team78.robot.commands.DriveWithJoysticks;
 
+import edu.wpi.first.wpilibj.AnalogGyro;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -14,12 +16,19 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class Chassis extends Subsystem {
     
+	//MOTORS
 	Talon leftDrive1 = new Talon(RobotMap.LEFT_DRIVE_1);
 	Talon rightDrive1 = new Talon(RobotMap.RIGHT_DRIVE_1);
 	Talon leftDrive2 = new Talon(RobotMap.LEFT_DRIVE_2);
 	Talon rightDrive2 = new Talon(RobotMap.RIGHT_DRIVE_2);
 	
+	//SENSORS
+	AnalogGyro gyro = new AnalogGyro(RobotMap.GYRO);
+	Encoder leftEnc = new Encoder(RobotMap.LEFT_ENC_A, RobotMap.LEFT_ENC_B);
+	Encoder rightEnc = new Encoder(RobotMap.RIGHT_ENC_A, RobotMap.RIGHT_ENC_B);
 	
+	//CONSTANT
+	final double HEADING_CORRECTION_CONSTANT = 0.015;
 	
 	
 	
@@ -31,6 +40,28 @@ public class Chassis extends Subsystem {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
     }
+    
+    //______________________________________________________________________________________________________________
+    //Auto Methods
+    public void driveStraightDistance(int distance){
+    	distanceError = distance - ((getLeftEnc()) + getRightEnc()) / 2);
+    	double speed = distanceError*DISTANCEP;
+    	
+    	if (speed > .45){
+    		speed = -.1;
+    	}
+    	else if (speed < .1){
+    		speed = .1;
+    	}
+    	
+    	double driftError = getGyro();
+    	setSpeed
+    		
+    	}
+    }
+    
+    //______________________________________________________________________________________________________________
+    //DRIVE METHODS
     
     public void driveWithJoysticks(){
     	double left = Robot.oi.getDriverLeftStick();
@@ -49,5 +80,31 @@ public class Chassis extends Subsystem {
     	setSpeed(0,0);
     }
     
+    public void HeadingCorrection(double heading){
+    	double driftError = heading - getGyro();
+    	setSpeed(-((HEADING_CORRECTION_CONSTANT)*driftError), ((HEADING_CORRECTION_CONSTANT)*driftError));
+    	
+    }
+    
+    //_______________________________________________________________________________________________________________
+    //SENSORS METHODS
+    
+    public double getGyro(){
+    	return gyro.getAngle();
+    }
+    
+    public void resetSensorData(){
+    	gyro.reset();
+    	leftEnc.reset();
+    }
+    
+    public double getLeftEnc(){
+    	return -leftEnc.getRaw();
+    }
+    
+    public double getRightEnc(){
+    	return rightEnc.getRaw();
+    }
 }
 
+     
