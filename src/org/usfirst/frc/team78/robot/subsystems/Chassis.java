@@ -30,9 +30,8 @@ public class Chassis extends Subsystem {
 	//VARIABLES
 	double distanceError;
 	
-	
 	//CONSTANTS
-	final double STRAIGHT_STRAFE_ERROR_CONST = (.032);
+	final double STRAIGHT_STRAFE_ERROR_CONST = (.008);
 	final double STRAIGHT_ERROR_CONST = (0.006);
 	final double DISTANCEP = 0.0003;
 	
@@ -84,7 +83,7 @@ public class Chassis extends Subsystem {
     	if (speed > .45){
     		speed = .45;
     	}
-    	else if (speed < .1){
+    	else if (speed < .1 && speed > 0){
     		speed = .1;
     	}
     	

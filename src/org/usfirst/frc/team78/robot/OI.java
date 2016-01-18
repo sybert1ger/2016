@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
+import org.usfirst.frc.team78.robot.commands.DriveStraightDistance;
 import org.usfirst.frc.team78.robot.commands.ExampleCommand;
 import org.usfirst.frc.team78.robot.commands.HeadingCorrection;
 
@@ -20,6 +21,7 @@ public class OI {
 	
 	//BUTTONS
 	public Button btnHoldHeading;
+	public Button btnFiveFeet;
 	
 	
 	//CONSTANTS
@@ -34,6 +36,9 @@ public class OI {
 		
 		btnHoldHeading = new JoystickButton(driverStick, 2);
 		btnHoldHeading.whileHeld(new HeadingCorrection());
+		
+		btnFiveFeet = new JoystickButton(driverStick, 4);
+		btnHoldHeading.whenPressed(new DriveStraightDistance(5));
 	}
 	
 	///DRIVER STICK
