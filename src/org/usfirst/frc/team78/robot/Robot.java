@@ -103,6 +103,8 @@ public class Robot extends IterativeRobot {
     	SmartDashboard.putNumber("Gyro", Robot.chassis.getGyro()); 
     	SmartDashboard.putNumber("Left Enc", Robot.chassis.getLeftEnc());
     	SmartDashboard.putNumber("Right Enc", Robot.chassis.getRightEnc());
+    	SmartDashboard.putNumber("Right Stick", Robot.oi.getDriverRightStick());
+    	SmartDashboard.putNumber("Left Stick", Robot.oi.getDriverLeftStick());
         Scheduler.getInstance().run();
     }
     

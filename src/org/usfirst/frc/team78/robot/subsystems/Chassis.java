@@ -56,10 +56,10 @@ public class Chassis extends Subsystem {
     }
     
     public void setSpeed(double left, double right){
-    	leftDrive1.set(-left);
-    	rightDrive1.set(right);
-    	leftDrive2.set(-left);
-    	rightDrive2.set(right);
+    	leftDrive1.set(left);
+    	rightDrive1.set(-right);
+    	leftDrive2.set(left);
+    	rightDrive2.set(-right);
     }
     
     public void stopAllDrive(){
@@ -68,7 +68,7 @@ public class Chassis extends Subsystem {
     
     public void straightStrafeCorrection(double heading){
     	double driftError = heading - getGyro();
-    	setSpeed(-((STRAIGHT_STRAFE_ERROR_CONST)*driftError), ((STRAIGHT_STRAFE_ERROR_CONST)*driftError));
+    	setSpeed(((STRAIGHT_STRAFE_ERROR_CONST)*driftError), -((STRAIGHT_STRAFE_ERROR_CONST)*driftError));
     }
     
  
@@ -76,8 +76,9 @@ public class Chassis extends Subsystem {
  //______________________________________________________________________________ 
  //AUTO METHODS  
     
+    //TODO
     public void driveStraightDistance(int distance){
-    	distanceError = distance - ((getLeftEnc() + getRightEnc()) / 2);
+    	distanceError = (distance - ((getLeftEnc() + getRightEnc()) / 2));
     	double speed = distanceError*DISTANCEP;
     	
     	if (speed > .45){
@@ -88,7 +89,7 @@ public class Chassis extends Subsystem {
     	}
     	
     	double driftError = getGyro();
-    	setSpeed(speed+((STRAIGHT_ERROR_CONST)*driftError), speed-((STRAIGHT_ERROR_CONST)*driftError));
+    	setSpeed(speed-((STRAIGHT_ERROR_CONST)*driftError), speed+((STRAIGHT_ERROR_CONST)*driftError));
     	
     	//TEST COMMENT
     }

@@ -5,8 +5,10 @@ import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 import org.usfirst.frc.team78.robot.commands.DriveStraightDistance;
+import org.usfirst.frc.team78.robot.commands.DriveWithJoysticks;
 import org.usfirst.frc.team78.robot.commands.ExampleCommand;
 import org.usfirst.frc.team78.robot.commands.HeadingCorrection;
+import org.usfirst.frc.team78.robot.commands.RicksDemands;
 
 
 /**
@@ -37,8 +39,13 @@ public class OI {
 		btnHoldHeading = new JoystickButton(driverStick, 2);
 		btnHoldHeading.whileHeld(new HeadingCorrection());
 		
-		btnFiveFeet = new JoystickButton(driverStick, 4);
-		btnHoldHeading.whenPressed(new DriveStraightDistance(5));
+		btnFiveFeet = new JoystickButton(driverStick, 1);
+		btnFiveFeet.whenPressed(new RicksDemands());
+		btnFiveFeet.whenReleased(new DriveWithJoysticks());
+		
+		/*btnFiveFeet = new JoystickButton(driverStick, 4);
+		btnFiveFeet.whenPressed(new DriveStraightDistance(5));
+		btnFiveFeet.whenReleased(new DriveWithJoysticks());*/
 	}
 	
 	///DRIVER STICK
@@ -48,7 +55,7 @@ public class OI {
 			return 0;
 		}
 		else
-			return stick;
+			return -stick;
 	}
 	
 	public double getDriverRightStick() {
@@ -57,7 +64,7 @@ public class OI {
 			return 0;
 		}
 		else
-			return stick;
+			return -stick;
 	}
 	
     //// CREATING BUTTONS
