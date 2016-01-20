@@ -29,8 +29,10 @@ public class Chassis extends Subsystem {
 	
 	//CONSTANT
 	final double HEADING_CORRECTION_CONSTANT = 0.015;
+	final double DISTANCEP = 0.0003;
+	final double STRAIGHT_ERROR_CONST = (0.006);
 	
-	
+	double distanceError;
 	
 	// Put methods for controlling this subsystem
     // here. Call these from Commands.
@@ -41,25 +43,7 @@ public class Chassis extends Subsystem {
         //setDefaultCommand(new MySpecialCommand());
     }
     
-    //______________________________________________________________________________________________________________
-    //Auto Methods
-    public void driveStraightDistance(int distance){
-    	distanceError = distance - ((getLeftEnc()) + getRightEnc()) / 2);
-    	double speed = distanceError*DISTANCEP;
-    	
-    	if (speed > .45){
-    		speed = -.1;
-    	}
-    	else if (speed < .1){
-    		speed = .1;
-    	}
-    	
-    	double driftError = getGyro();
-    	setSpeed
-    		
-    	}
-    }
-    
+  
     //______________________________________________________________________________________________________________
     //DRIVE METHODS
     
@@ -85,6 +69,26 @@ public class Chassis extends Subsystem {
     	setSpeed(-((HEADING_CORRECTION_CONSTANT)*driftError), ((HEADING_CORRECTION_CONSTANT)*driftError));
     	
     }
+    
+    //______________________________________________________________________________________________________________
+    //Auto Methods
+    public void driveStraightDistance(int distance){
+    	distanceError = distance - ((getLeftEnc()) + (getRightEnc()) / 2);
+    	double speed = distanceError*DISTANCEP;
+    	
+    	
+    	if (speed > .45){
+    		speed = .45;
+    	}
+    	else if (speed < .1 && speed > 0){
+    		speed = .1;
+    	}
+    	
+    	double driftError = getGyro();
+    	setSpeed(speed+((STRAIGHT_ERROR_CONST)*driftError), speed-((STRAIGHT_ERROR_CONST)*driftError));
+    		
+   	}
+    
     
     //_______________________________________________________________________________________________________________
     //SENSORS METHODS
