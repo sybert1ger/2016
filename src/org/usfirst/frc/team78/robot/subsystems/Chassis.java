@@ -66,7 +66,7 @@ public class Chassis extends Subsystem {
     	setSpeed(0,0);
     }
     
-    public void straightStrafeCorrection(double heading){
+    public void headingCorrection (double heading){
     	double driftError = heading - getGyro();
     	setSpeed(((STRAIGHT_STRAFE_ERROR_CONST)*driftError), -((STRAIGHT_STRAFE_ERROR_CONST)*driftError));
     }
@@ -77,7 +77,7 @@ public class Chassis extends Subsystem {
  //AUTO METHODS  
     
     //TODO
-    public void driveStraightDistance(int distance){
+    public void driveStraightDistance(double distance){
     	distanceError = (distance - ((getLeftEnc() + getRightEnc()) / 2));
     	double speed = distanceError*DISTANCEP;
     	
