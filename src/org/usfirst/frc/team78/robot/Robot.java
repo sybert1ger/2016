@@ -98,6 +98,7 @@ public class Robot extends IterativeRobot {
      * This function is called periodically during operator control
      */
     public void teleopPeriodic() {
+    	SmartDashboard.putNumber("gyro",Robot.chassis.getGyro());
         Scheduler.getInstance().run();
     }
     
