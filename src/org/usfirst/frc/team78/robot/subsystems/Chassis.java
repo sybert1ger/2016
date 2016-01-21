@@ -8,6 +8,7 @@ import org.usfirst.frc.team78.robot.commands.DriveWithJoysticks;
 
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Talon;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -31,9 +32,12 @@ public class Chassis extends Subsystem {
 	double distanceError;
 	
 	//CONSTANTS
-	final double STRAIGHT_STRAFE_ERROR_CONST = (.008);
+	final double STRAIGHT_STRAFE_ERROR_CONST = (.01);
 	final double STRAIGHT_ERROR_CONST = (0.006);
-	final double DISTANCEP = 0.0003;
+	final double DISTANCEP = 0.00015;
+	
+	//TIMER
+	Timer timer = new Timer();
 	
 	
 	
@@ -81,17 +85,42 @@ public class Chassis extends Subsystem {
     	distanceError = (distance - ((getLeftEnc() + getRightEnc()) / 2));
     	double speed = distanceError*DISTANCEP;
     	
-    	if (speed > .45){
+    	if (distanceError > 3000){
+    		speed = .45;
+    	}
+    	
+    	else if (speed > .45){
     		speed = .45;
     	}
     	else if (speed < .1 && speed > 0){
     		speed = .1;
     	}
+    	else if(speed > -.1 && speed < 0){
+    		speed = -.1;
+    	}
     	
     	double driftError = getGyro();
-    	setSpeed(speed-((STRAIGHT_ERROR_CONST)*driftError), speed+((STRAIGHT_ERROR_CONST)*driftError));
+    	setSpeed(speed-((STRAIGHT_STRAFE_ERROR_CONST)*driftError), speed+((STRAIGHT_STRAFE_ERROR_CONST)*driftError));
     	
     	//TEST COMMENT
+    }
+    
+    public boolean isAtTarget(double target){
+    	boolean atTarget = false;
+    	double current = (getLeftEnc() + getRightEnc())/2;
+    	
+    	if (current < (target+20) && current > (target-20)){
+    		timer.start();
+    	}
+    	else{
+    		timer.stop();
+    		timer.reset();
+    	}
+    	
+    	if(timer.get() >.25){
+    		atTarget = true;
+    	}
+    	return atTarget;
     }
     
     

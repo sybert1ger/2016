@@ -16,8 +16,8 @@ public class DriveStraightDistance extends Command {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.chassis);
-    	m_distance_clicks = feet * 637;
-    	setTimeout(10);
+    	m_distance_clicks = feet * 670;
+    	//setTimeout(17);
     }
 
     // Called just before this Command runs the first time
@@ -32,7 +32,8 @@ public class DriveStraightDistance extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return isTimedOut();
+        return Robot.chassis.isAtTarget(m_distance_clicks);
+    	//return isTimedOut();
     }
 
     // Called once after isFinished returns true

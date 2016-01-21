@@ -40,7 +40,7 @@ public class OI {
 		btnHoldHeading.whileHeld(new HeadingCorrection());
 		
 		btnFiveFeet = new JoystickButton(driverStick, 1);
-		btnFiveFeet.whenPressed(new RicksDemands());
+		btnFiveFeet.whenPressed(new DriveStraightDistance(8));
 		btnFiveFeet.whenReleased(new DriveWithJoysticks());
 		
 		/*btnFiveFeet = new JoystickButton(driverStick, 4);
