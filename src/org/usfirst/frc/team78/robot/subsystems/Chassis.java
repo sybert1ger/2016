@@ -32,8 +32,7 @@ public class Chassis extends Subsystem {
 	double distanceError;
 	
 	//CONSTANTS
-	final double STRAIGHT_STRAFE_ERROR_CONST = (.01);
-	final double STRAIGHT_ERROR_CONST = (0.006);
+	final double GYRO_P = (.01);
 	final double DISTANCEP = 0.00015;
 	
 	//TIMER
@@ -70,17 +69,10 @@ public class Chassis extends Subsystem {
     	setSpeed(0,0);
     }
     
-    public void headingCorrection (double heading){
-    	double driftError = heading - getGyro();
-    	setSpeed(((STRAIGHT_STRAFE_ERROR_CONST)*driftError), -((STRAIGHT_STRAFE_ERROR_CONST)*driftError));
-    }
-    
- 
     
  //______________________________________________________________________________ 
  //AUTO METHODS  
     
-    //TODO
     public void driveStraightDistance(double distance){
     	distanceError = (distance - ((getLeftEnc() + getRightEnc()) / 2));
     	double speed = distanceError*DISTANCEP;
@@ -100,16 +92,15 @@ public class Chassis extends Subsystem {
     	}
     	
     	double driftError = getGyro();
-    	setSpeed(speed-((STRAIGHT_STRAFE_ERROR_CONST)*driftError), speed+((STRAIGHT_STRAFE_ERROR_CONST)*driftError));
+    	setSpeed(speed-((GYRO_P)*driftError), speed+((GYRO_P)*driftError));
     	
-    	//TEST COMMENT
-    }
+    }//end driveStraightDistance
     
     public boolean isAtTarget(double target){
     	boolean atTarget = false;
     	double current = (getLeftEnc() + getRightEnc())/2;
     	
-    	if (current < (target+20) && current > (target-20)){
+    	if (current < (target+75) && current > (target-75)){
     		timer.start();
     	}
     	else{
@@ -121,6 +112,21 @@ public class Chassis extends Subsystem {
     		atTarget = true;
     	}
     	return atTarget;
+    	
+    }// end isAtTarget
+    
+    public void headingCorrection (double heading){
+    	double driftError = heading - getGyro();
+    	setSpeed(((GYRO_P)*driftError), -((GYRO_P)*driftError));
+    	
+    }//end headingCorrection
+    
+    public void turnAngle(double angle){
+    	
+    }
+    
+    public void setTurnSpeed(double speed){
+    	setSpeed(speed, -speed);
     }
     
     
