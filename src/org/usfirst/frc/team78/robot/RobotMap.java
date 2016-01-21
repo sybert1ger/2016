@@ -15,19 +15,15 @@ public class RobotMap {
 	final static public int RIGHT_DRIVE_2 = 3;
 	
 	
-	//Analog Sensors
-	final static public int gyro = 0;
+	//ANALOG SENSORS
+	final static public int GYRO = 0;
 	
-	//Constants
 	
-	final double heading_correction_const=(.032);
-	
-	//Digital IO
-	final static public int left_enc_a = 0;
-	final static public int left_enc_b = 0;
-	final static public int right_enc_a = 0;
-	final static public int right_enc_b = 0;
-	
+	//DIGITAL IO
+	final static public int LEFT_ENC_A = 0;
+	final static public int LEFT_ENC_B = 1;
+	final static public int RIGHT_ENC_A = 2;
+	final static public int RIGHT_ENC_B = 3;
 	
 	
     // For example to map the left and right motors, you could define the
@@ -40,4 +36,3 @@ public class RobotMap {
     // public static int rangefinderPort = 1;
     // public static int rangefinderModule = 1;
 }
-w

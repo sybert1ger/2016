@@ -7,25 +7,24 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class DriveWithJoysticks extends Command {
+public class HeadingCorrection extends Command {
 
-    public DriveWithJoysticks() {
-    	requires(Robot.chassis);
-    	
+    public HeadingCorrection() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	//
+    	requires(Robot.chassis);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	//Robot.chassis.resetSensorData();
     }
-    
+
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.chassis.driveWithJoysticks();
+    	Robot.chassis.headingCorrection(0);
     }
-    	
+
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
         return false;
