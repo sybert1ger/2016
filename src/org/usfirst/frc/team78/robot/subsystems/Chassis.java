@@ -22,6 +22,7 @@ public class Chassis extends Subsystem {
 	Talon leftDrive2 = new Talon(RobotMap.LEFT_DRIVE_2);
 	Talon rightDrive2 = new Talon(RobotMap.RIGHT_DRIVE_2);
 	
+	
 	//SENSORS
 	AnalogGyro gyro = new AnalogGyro(RobotMap.GYRO);
 	Encoder leftEnc = new Encoder(RobotMap.LEFT_ENC_A, RobotMap.LEFT_ENC_B);
@@ -71,6 +72,22 @@ public class Chassis extends Subsystem {
     	setSpeed(((STRAIGHT_STRAFE_ERROR_CONST)*driftError), -((STRAIGHT_STRAFE_ERROR_CONST)*driftError));
     }
     
+    public void Turn90() {
+		double initial = gyro.getAngle();
+		double endposition = initial + 90;
+		
+		
+		while (initial<endposition){
+			setSpeed(.1,-.1);
+		}
+			
+    }
+		
+		
+		// TODO Auto-generated method stub
+		
+	
+    
  
     
  //______________________________________________________________________________ 
@@ -115,6 +132,8 @@ public class Chassis extends Subsystem {
     public double getRightEnc(){
     	return rightEnc.getRaw();
     }
+
+	
 }
 
 

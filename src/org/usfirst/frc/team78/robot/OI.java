@@ -9,6 +9,7 @@ import org.usfirst.frc.team78.robot.commands.DriveWithJoysticks;
 import org.usfirst.frc.team78.robot.commands.ExampleCommand;
 import org.usfirst.frc.team78.robot.commands.HeadingCorrection;
 import org.usfirst.frc.team78.robot.commands.RicksDemands;
+import org.usfirst.frc.team78.robot.commands.Turn90;
 
 
 /**
@@ -19,11 +20,14 @@ public class OI {
 	
 	//JOYSTICKS
 	public Joystick driverStick;
-	
+	public Joystick cameraStick;
 	
 	//BUTTONS
 	public Button btnHoldHeading;
 	public Button btnFiveFeet;
+	public Button btnTurn90;
+	
+	
 	
 	
 	//CONSTANTS
@@ -42,6 +46,12 @@ public class OI {
 		btnFiveFeet = new JoystickButton(driverStick, 1);
 		btnFiveFeet.whenPressed(new RicksDemands());
 		btnFiveFeet.whenReleased(new DriveWithJoysticks());
+		
+		btnTurn90 = new JoystickButton(driverStick, 3);
+		btnTurn90.whenPressed(new Turn90());
+		
+		cameraStick = new Joystick(1);
+		
 		
 		/*btnFiveFeet = new JoystickButton(driverStick, 4);
 		btnFiveFeet.whenPressed(new DriveStraightDistance(5));
@@ -65,6 +75,14 @@ public class OI {
 		}
 		else
 			return -stick;
+	}
+	
+	public double getCameraY() {
+		return (cameraStick.getY() + 1)/2 * 180;
+	}
+	
+	public double getCameraX() {
+		return (cameraStick.getX() + 1)/2 * 180;
 	}
 	
     //// CREATING BUTTONS
