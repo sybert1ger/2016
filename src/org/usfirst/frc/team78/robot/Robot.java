@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import org.usfirst.frc.team78.robot.commands.ExampleCommand;
 import org.usfirst.frc.team78.robot.subsystems.Chassis;
 import org.usfirst.frc.team78.robot.subsystems.ExampleSubsystem;
+import org.usfirst.frc.team78.robot.subsystems.Vision;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -23,6 +24,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Robot extends IterativeRobot {
 
 	public static final Chassis chassis = new Chassis();
+	public static final Vision vision = new Vision();
 	public static final ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
 	public static OI oi;
 
@@ -105,6 +107,8 @@ public class Robot extends IterativeRobot {
     	SmartDashboard.putNumber("Right Enc", Robot.chassis.getRightEnc());
     	SmartDashboard.putNumber("Right Stick", Robot.oi.getDriverRightStick());
     	SmartDashboard.putNumber("Left Stick", Robot.oi.getDriverLeftStick());
+    	SmartDashboard.putNumber("Cam X", Robot.oi.getCamX());
+    	SmartDashboard.putNumber("Cam Y", Robot.oi.getCamY());
         Scheduler.getInstance().run();
     }
     

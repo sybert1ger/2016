@@ -20,6 +20,7 @@ public class OI {
 	
 	//JOYSTICKS
 	public Joystick driverStick;
+	public Joystick camStick;
 	
 	
 	//BUTTONS
@@ -71,6 +72,14 @@ public class OI {
 		}
 		else
 			return -stick;
+	}
+	
+	public double getCamX(){
+		return -camStick.getX();
+	}
+	
+	public double getCamY(){
+		return -camStick.getY();
 	}
 	
     //// CREATING BUTTONS

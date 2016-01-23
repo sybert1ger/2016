@@ -13,6 +13,8 @@ public class RobotMap {
 	final static public int RIGHT_DRIVE_1 = 2;
 	final static public int LEFT_DRIVE_2 = 1;
 	final static public int RIGHT_DRIVE_2 = 3;
+	final static public int PAN = 4;
+	final static public int TILT = 5;
 	
 	
 	//ANALOG SENSORS
