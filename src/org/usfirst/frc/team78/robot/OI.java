@@ -38,6 +38,7 @@ public class OI {
 	
 	public OI(){
 		driverStick = new Joystick(0);
+		camStick = new Joystick(1);
 		
 		btnHoldHeading = new JoystickButton(driverStick, 2);
 		btnHoldHeading.whileHeld(new HeadingCorrection());
@@ -75,11 +76,21 @@ public class OI {
 	}
 	
 	public double getCamX(){
-		return -camStick.getX();
+		double stick = camStick.getX();
+		if (Math.abs(stick) < STICK_DEADZONE){
+			return 0;
+		}
+		else
+			return -stick;
 	}
 	
 	public double getCamY(){
-		return -camStick.getY();
+		double stick = camStick.getY();
+		if (Math.abs(stick) < STICK_DEADZONE){
+			return 0;
+		}
+		else
+			return -stick;
 	}
 	
     //// CREATING BUTTONS
