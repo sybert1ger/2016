@@ -30,10 +30,12 @@ public class Chassis extends Subsystem {
 	
 	//VARIABLES
 	double distanceError;
+	boolean timerStart = false;
 	
 	//CONSTANTS
 	final double GYRO_P = (.01);
-	final double DISTANCEP = 0.00015;
+	final double DISTANCEP = 0.0002;
+	final double TURN_P = .003;
 	
 	//TIMER
 	Timer timer = new Timer();
@@ -84,11 +86,11 @@ public class Chassis extends Subsystem {
     	else if (speed > .45){
     		speed = .45;
     	}
-    	else if (speed < .1 && speed > 0){
-    		speed = .1;
+    	else if (speed < .15 && speed > 0){
+    		speed = .15;
     	}
-    	else if(speed > -.1 && speed < 0){
-    		speed = -.1;
+    	else if(speed > -.15 && speed < 0){
+    		speed = -.15;
     	}
     	
     	double driftError = getGyro();
@@ -96,16 +98,86 @@ public class Chassis extends Subsystem {
     	
     }//end driveStraightDistance
     
-    public boolean isAtTarget(double target){
+    
+    public boolean isAtDistanceTarget(double target){
     	boolean atTarget = false;
+    	
     	double current = (getLeftEnc() + getRightEnc())/2;
     	
     	if (current < (target+75) && current > (target-75)){
-    		timer.start();
+    		if(timerStart == false){
+    			timerStart = true;
+    			timer.start();
+    		}
+    		
     	}
+    	
     	else{
-    		timer.stop();
-    		timer.reset();
+    		
+    		if(timerStart == true){
+    			timer.stop();
+    			timer.reset();
+    			timerStart = false;
+    		}
+    	}
+    	
+    	if(timer.get() >.25){
+    		atTarget = true;
+    	}
+    	return atTarget;
+    	
+    }// end isAtDistanceTarget
+    
+    
+    public void headingCorrection (double heading){
+    	double driftError = heading - getGyro();
+    	setSpeed(((GYRO_P)*driftError), -((GYRO_P)*driftError));
+    	
+    }//end headingCorrection
+    
+    
+    public void turnAngle(double target){
+    	double speed;
+    	double error = target- getGyro();
+    	speed = TURN_P*(error);
+    	
+    	if (speed > .7){
+    		speed = .7;
+    	}
+    	if(speed < -.7){ 
+    		speed = -.7;
+    	}
+    	
+    	if (speed < .05 && speed > 0){
+    		speed = .05;
+    	}
+    	if(speed > -.05 && speed < 0){ 
+    		speed = -.05;
+    	}
+    	
+    	setTurnSpeed(speed);
+    }
+    
+    public boolean isAtTurnTarget(double target){
+    	boolean atTarget = false;
+    	
+    	double current = getGyro();
+    	
+    	if (current < (target+5) && current > (target-5)){
+    		if(timerStart == false){
+    			timerStart = true;
+    			timer.start();
+    		}
+    		
+    	}
+    	
+    	else{
+    		
+    		if(timerStart == true){
+    			timer.stop();
+    			timer.reset();
+    			timerStart = false;
+    		}
     	}
     	
     	if(timer.get() >.25){
@@ -114,16 +186,6 @@ public class Chassis extends Subsystem {
     	return atTarget;
     	
     }// end isAtTarget
-    
-    public void headingCorrection (double heading){
-    	double driftError = heading - getGyro();
-    	setSpeed(((GYRO_P)*driftError), -((GYRO_P)*driftError));
-    	
-    }//end headingCorrection
-    
-    public void turnAngle(double angle){
-    	
-    }
     
     public void setTurnSpeed(double speed){
     	setSpeed(speed, -speed);

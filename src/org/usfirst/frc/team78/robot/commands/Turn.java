@@ -7,17 +7,15 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class DriveStraightDistance extends Command {
+public class Turn extends Command {
 
-	double m_distance_clicks;
+	double m_angle;
 	
-	
-    public DriveStraightDistance(double feet) {
+    public Turn(double angle) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.chassis);
-    	m_distance_clicks = feet * 670;
-    	//setTimeout(17);
+    	 m_angle = angle;
     }
 
     // Called just before this Command runs the first time
@@ -27,23 +25,20 @@ public class DriveStraightDistance extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.chassis.driveStraightDistance(m_distance_clicks);
+    	Robot.chassis.turnAngle(m_angle);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return Robot.chassis.isAtDistanceTarget(m_distance_clicks);
-    	//return isTimedOut();
+        return Robot.chassis.isAtTurnTarget(m_angle);
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.chassis.stopAllDrive();
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    	end();
     }
 }
