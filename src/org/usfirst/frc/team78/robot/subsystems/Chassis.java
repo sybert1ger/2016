@@ -6,10 +6,13 @@ import org.usfirst.frc.team78.robot.Robot;
 import org.usfirst.frc.team78.robot.RobotMap;
 import org.usfirst.frc.team78.robot.commands.DriveWithJoysticks;
 
+import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.Ultrasonic;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -27,11 +30,12 @@ public class Chassis extends Subsystem {
 	AnalogGyro gyro = new AnalogGyro(RobotMap.GYRO);
 	Encoder leftEnc = new Encoder(RobotMap.LEFT_ENC_A, RobotMap.LEFT_ENC_B);
 	Encoder rightEnc = new Encoder(RobotMap.RIGHT_ENC_A, RobotMap.RIGHT_ENC_B);
+	AnalogInput ultrasonic = new AnalogInput(1);
 	
 	//VARIABLES
 	double distanceError;
 	boolean timerStart = false;
-	public double shooterSpeed = 0;
+	double shooterSpeed = 0;
 	
 	//CONSTANTS
 	final double GYRO_P = (.01);
@@ -237,6 +241,10 @@ public class Chassis extends Subsystem {
     
     public double getRightEnc(){
     	return rightEnc.getRaw();
+    }
+    
+    public double getUltra(){
+    	return ((double)ultrasonic.getValue() - 20.0)/120.0;//converts to feet, established through test distances
     }
 }
 

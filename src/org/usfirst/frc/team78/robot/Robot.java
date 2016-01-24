@@ -45,6 +45,8 @@ public class Robot extends IterativeRobot {
         server = CameraServer.getInstance();
     	server.setQuality(50);
     	server.startAutomaticCapture("cam0");
+    	
+    	
     }
 	
 	/**
@@ -114,7 +116,7 @@ public class Robot extends IterativeRobot {
     	SmartDashboard.putNumber("Cam X", Robot.oi.getCamX());
     	SmartDashboard.putNumber("Cam Y", Robot.oi.getCamY());
     	SmartDashboard.putNumber("Shooter Rate", Robot.chassis.getShooterRate());
-    	SmartDashboard.putNumber("Shooter Speed", Robot.chassis.shooterSpeed);
+    	SmartDashboard.putNumber("Ultrasonic", Robot.chassis.getUltra());
         Scheduler.getInstance().run();
     }
     
