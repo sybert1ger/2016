@@ -3,11 +3,14 @@ package org.usfirst.frc.team78.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team78.robot.commands.DriveStraightDistance;
 import org.usfirst.frc.team78.robot.commands.DriveWithJoysticks;
 import org.usfirst.frc.team78.robot.commands.ExampleCommand;
 import org.usfirst.frc.team78.robot.commands.HeadingCorrection;
+import org.usfirst.frc.team78.robot.commands.MoveCam;
+import org.usfirst.frc.team78.robot.commands.StartVision;
 import org.usfirst.frc.team78.robot.commands.Turn;
 
 
@@ -27,6 +30,7 @@ public class OI {
 	public Button btnHoldHeading;
 	public Button btnFiveFeet;
 	public Button btnTurn;
+	public Button btnStartVision;
 	
 	
 	//CONSTANTS
@@ -51,9 +55,15 @@ public class OI {
 		btnTurn.whenPressed(new Turn(180));
 		btnTurn.whenReleased(new DriveWithJoysticks());
 		
+		btnStartVision = new JoystickButton(camStick,1);
+		btnStartVision.whenPressed(new StartVision());
+		btnStartVision.whenReleased(new MoveCam());
+		
 		/*btnFiveFeet = new JoystickButton(driverStick, 4);
 		btnFiveFeet.whenPressed(new DriveStraightDistance(5));
 		btnFiveFeet.whenReleased(new DriveWithJoysticks());*/
+		
+		//SmartDashboard.putData(new StartVision());
 	}
 	
 	///DRIVER STICK
@@ -81,7 +91,7 @@ public class OI {
 			return 0;
 		}
 		else
-			return -stick;
+			return stick;
 	}
 	
 	public double getCamY(){
@@ -90,7 +100,7 @@ public class OI {
 			return 0;
 		}
 		else
-			return -stick;
+			return stick;
 	}
 	
     //// CREATING BUTTONS
