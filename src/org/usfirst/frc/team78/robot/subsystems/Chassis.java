@@ -8,8 +8,8 @@ import org.usfirst.frc.team78.robot.commands.DriveWithJoysticks;
 
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Talon;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.AnalogGyro;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -31,11 +31,13 @@ public class Chassis extends Subsystem {
 	//VARIABLES
 	double distanceError;
 	boolean timerStart = false;
+	public double shooterSpeed = 0;
 	
 	//CONSTANTS
 	final double GYRO_P = (.01);
 	final double DISTANCEP = 0.0002;
-	final double TURN_P = .003;
+	final double TURN_P = .0035;
+	final double SHOOTER_P = .00005;
 	
 	//TIMER
 	Timer timer = new Timer();
@@ -148,11 +150,11 @@ public class Chassis extends Subsystem {
     		speed = -.7;
     	}
     	
-    	if (speed < .05 && speed > 0){
-    		speed = .05;
+    	if (speed < .1 && speed > 0){
+    		speed = .1;
     	}
-    	if(speed > -.05 && speed < 0){ 
-    		speed = -.05;
+    	if(speed > -.1 && speed < 0){ 
+    		speed = -.1;
     	}
     	
     	setTurnSpeed(speed);
@@ -189,8 +191,32 @@ public class Chassis extends Subsystem {
     
     public void setTurnSpeed(double speed){
     	setSpeed(speed, -speed);
-    }
+    }// end setTurnSpeed
+ 
     
+ //______________________________________________________________________________ 
+ //SHOOTER METHODS 
+    
+    public double getShooterRate(){
+    	return -leftEnc.getRate();
+    	
+    }//end getShooterRate
+    
+    public void setShooterRate(double rate){
+    	double rateError = rate - getShooterRate();
+    	shooterSpeed = shooterSpeed + ((SHOOTER_P)*rateError);
+    	setShooterSpeed(shooterSpeed);
+
+    }//end setShooterRate
+    
+    public void setShooterSpeed(double speed){
+    	leftDrive1.set(speed);
+    	leftDrive2.set(speed);    	
+    }//end setShooterSpeed
+    
+    public void stopShooter(){
+    	setShooterSpeed(0);
+    }
     
  //______________________________________________________________________________ 
  //SENSOR METHODS  

@@ -21,7 +21,6 @@ public class Vision extends Subsystem {
     Servo tilt = new Servo(RobotMap.TILT);
     
     
-
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
@@ -29,18 +28,10 @@ public class Vision extends Subsystem {
     }
     
     
-    public void initVision(){
-
-    }
-    
-
-    
     public void moveCam(){
     	pan.set((Robot.oi.getCamX()/2) + 0.5);
     	tilt.set((Robot.oi.getCamY()/2) + 0.5);
     }
-    
-    
     
 
 }
