@@ -9,7 +9,9 @@ import org.usfirst.frc.team78.robot.commands.DriveWithJoysticks;
 import org.usfirst.frc.team78.robot.commands.ExampleCommand;
 import org.usfirst.frc.team78.robot.commands.HeadingCorrection;
 import org.usfirst.frc.team78.robot.commands.RicksDemands;
+import org.usfirst.frc.team78.robot.commands.SpinTurn;
 import org.usfirst.frc.team78.robot.commands.Turn90;
+import org.usfirst.frc.team78.robot.commands.TurnHeading;
 
 
 /**
@@ -25,10 +27,11 @@ public class OI {
 	//BUTTONS
 	public Button btnHoldHeading;
 	public Button btnFiveFeet;
-	public Button btnTurn90;
-	
-	
-	
+	public Button btnTurn;
+	private Joystick camStick;
+	public Button btnHeadingTurnRight;
+	public Button btnHeadingTurnLeft;
+	public Button btnStartVision;
 	
 	//CONSTANTS
 	final static double STICK_DEADZONE = 0.05;
@@ -47,10 +50,16 @@ public class OI {
 		btnFiveFeet.whenPressed(new RicksDemands());
 		btnFiveFeet.whenReleased(new DriveWithJoysticks());
 		
-		btnTurn90 = new JoystickButton(driverStick, 3);
-		btnTurn90.whenPressed(new Turn90());
+		btnTurn = new JoystickButton(driverStick, 3);
+		btnTurn.whenPressed(new SpinTurn(90));
 		
-		cameraStick = new Joystick(1);
+		camStick = new Joystick(1);
+		
+		btnHeadingTurnRight = new JoystickButton(driverStick, 4);
+		btnHeadingTurnRight.whenPressed(new TurnHeading(90));
+		
+		btnHeadingTurnLeft = new JoystickButton(driverStick, 5);
+		btnHeadingTurnLeft.whenPressed(new TurnHeading(-90));
 		
 		
 		/*btnFiveFeet = new JoystickButton(driverStick, 4);
@@ -78,13 +87,27 @@ public class OI {
 	}
 	
 	public double getCameraY() {
-		return (cameraStick.getY() + 1)/2 * 180;
+		return -camStick.getY();  
+		 		double stick = camStick.getY();  
+		 		if (Math.abs(stick) < STICK_DEADZONE){  
+		 			return 0;  
+		 		}  
+		 		else  
+		 			return -stick;  
+
 	}
 	
-	public double getCameraX() {
-		return (cameraStick.getX() + 1)/2 * 180;
-	}
-	
+	 
+	  	public double getCamX(){  
+			return -camStick.getX();  
+	 		double stick = camStick.getX();  
+	 		if (Math.abs(stick) < STICK_DEADZONE){  
+	 			return 0;  
+	 		}  
+		else  
+			return -stick;  
+	 	}  
+
     //// CREATING BUTTONS
     // One type of button is a joystick button which is any button on a joystick.
     // You create one by telling it which joystick it's on and which button

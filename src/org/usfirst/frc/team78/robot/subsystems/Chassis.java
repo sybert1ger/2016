@@ -35,7 +35,7 @@ public class Chassis extends Subsystem {
 	final double STRAIGHT_STRAFE_ERROR_CONST = (.008);
 	final double STRAIGHT_ERROR_CONST = (0.006);
 	final double DISTANCEP = 0.0003;
-	
+	final double GYRO_P = (0.1);
 	
 	
 	// Put methods for controlling this subsystem
@@ -68,21 +68,21 @@ public class Chassis extends Subsystem {
     }
     
     public void headingCorrection (double heading){
-    	double driftError = heading - getGyro();
-    	setSpeed(((STRAIGHT_STRAFE_ERROR_CONST)*driftError), -((STRAIGHT_STRAFE_ERROR_CONST)*driftError));
+    	double driftError = Math.abs(heading) - Math.abs(getGyro());
+    	if(heading > 0){
+    	setSpeed(((GYRO_P)*driftError), -((GYRO_P)*driftError));
+    	} else {
+    		setSpeed(((GYRO_P)*driftError), ((GYRO_P*DriftError))
+    	}
     }
     
-    public void Turn90() {
-		double initial = gyro.getAngle();
-		double endposition = initial + 90;
-		
-		
-		while (initial<endposition){
-			setSpeed(.1,-.1);
-		}
-			
+    public void turnAngle(double target){
+    	double speed;
+    	double error = target- getGyro();
+    	speed = TURN_P*(error);
+    	
+    	if
     }
-		
 		
 		// TODO Auto-generated method stub
 		
@@ -110,6 +110,17 @@ public class Chassis extends Subsystem {
     	
     	//TEST COMMENT
     }
+  
+    public double scaleSpeed(double degrees, double turnDegrees){
+    	double degreesLeft = turnDegrees - degrees;
+    	double speed =  degreesLeft / 255;
+    	if(speed < 0.1) {
+    		return 0.1;
+    	}
+    	return speed;
+    }
+    
+   
     
     
  //______________________________________________________________________________ 
