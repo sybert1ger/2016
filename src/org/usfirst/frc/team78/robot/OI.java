@@ -52,11 +52,11 @@ public class OI {
 		btnFiveFeet.whenReleased(new DriveWithJoysticks());
 		
 		btnTurn = new JoystickButton(driverStick, 4);
-		btnTurn.whenPressed(new Turn(-90));
+		btnTurn.whenPressed(new Turn(180));
 		btnTurn.whenReleased(new DriveWithJoysticks());
 		
-		btnSetShooterRate = new JoystickButton(driverStick, 3);
-		btnSetShooterRate.whileHeld(new SetShooterRate(750));
+		btnSetShooterRate = new JoystickButton(camStick, 3);
+		btnSetShooterRate.whileHeld(new SetShooterRate(5000));
 		
 		/*btnFiveFeet = new JoystickButton(driverStick, 4);
 		btnFiveFeet.whenPressed(new DriveStraightDistance(5));

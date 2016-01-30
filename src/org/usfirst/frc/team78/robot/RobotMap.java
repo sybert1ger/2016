@@ -15,6 +15,7 @@ public class RobotMap {
 	final static public int RIGHT_DRIVE_2 = 3;
 	final static public int PAN = 4;
 	final static public int TILT = 5;
+	final static public int RIGHT_SHOOTER = 6;
 	
 	
 	//ANALOG SENSORS
@@ -26,6 +27,8 @@ public class RobotMap {
 	final static public int LEFT_ENC_B = 1;
 	final static public int RIGHT_ENC_A = 2;
 	final static public int RIGHT_ENC_B = 3;
+	final static public int RIGHT_SHOOTER_ENC_A = 4;
+	final static public int RIGHT_SHOOTER_ENC_B = 5;
 	
 	
     // For example to map the left and right motors, you could define the

@@ -35,13 +35,12 @@ public class Chassis extends Subsystem {
 	//VARIABLES
 	double distanceError;
 	boolean timerStart = false;
-	double shooterSpeed = 0;
+	public Boolean isTurnFinished = false;
 	
 	//CONSTANTS
 	final double GYRO_P = (.01);
 	final double DISTANCEP = 0.0002;
 	final double TURN_P = .0035;
-	final double SHOOTER_P = .00005;
 	
 	//TIMER
 	Timer timer = new Timer();
@@ -129,7 +128,10 @@ public class Chassis extends Subsystem {
     	
     	if(timer.get() >.25){
     		atTarget = true;
+    
     	}
+    	
+    	
     	return atTarget;
     	
     }// end isAtDistanceTarget
@@ -188,6 +190,7 @@ public class Chassis extends Subsystem {
     	
     	if(timer.get() >.25){
     		atTarget = true;
+    		isTurnFinished = true;
     	}
     	return atTarget;
     	
@@ -196,31 +199,7 @@ public class Chassis extends Subsystem {
     public void setTurnSpeed(double speed){
     	setSpeed(speed, -speed);
     }// end setTurnSpeed
- 
-    
- //______________________________________________________________________________ 
- //SHOOTER METHODS 
-    
-    public double getShooterRate(){
-    	return -leftEnc.getRate();
-    	
-    }//end getShooterRate
-    
-    public void setShooterRate(double rate){
-    	double rateError = rate - getShooterRate();
-    	shooterSpeed = shooterSpeed + ((SHOOTER_P)*rateError);
-    	setShooterSpeed(shooterSpeed);
 
-    }//end setShooterRate
-    
-    public void setShooterSpeed(double speed){
-    	leftDrive1.set(speed);
-    	leftDrive2.set(speed);    	
-    }//end setShooterSpeed
-    
-    public void stopShooter(){
-    	setShooterSpeed(0);
-    }
     
  //______________________________________________________________________________ 
  //SENSOR METHODS  

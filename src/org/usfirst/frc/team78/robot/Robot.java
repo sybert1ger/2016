@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
 import org.usfirst.frc.team78.robot.commands.DoNothing;
 import org.usfirst.frc.team78.robot.subsystems.Chassis;
+import org.usfirst.frc.team78.robot.subsystems.Shooter;
 import org.usfirst.frc.team78.robot.subsystems.Vision;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -25,6 +26,7 @@ public class Robot extends IterativeRobot {
 
 	public static final Chassis chassis = new Chassis();
 	public static final Vision vision = new Vision();
+	public static final Shooter shooter = new Shooter();
 	public static OI oi;
 
     Command autonomousCommand;
@@ -115,8 +117,12 @@ public class Robot extends IterativeRobot {
     	SmartDashboard.putNumber("Left Stick", Robot.oi.getDriverLeftStick());
     	SmartDashboard.putNumber("Cam X", Robot.oi.getCamX());
     	SmartDashboard.putNumber("Cam Y", Robot.oi.getCamY());
-    	SmartDashboard.putNumber("Shooter Rate", Robot.chassis.getShooterRate());
+    	SmartDashboard.putNumber("Shooter Rate", Robot.shooter.getShooterRate());
     	SmartDashboard.putNumber("Ultrasonic", Robot.chassis.getUltra());
+    	SmartDashboard.putNumber("Shooter Speed", Robot.shooter.shooterSpeed);
+    	SmartDashboard.putNumber("Rate Error", Robot.shooter.rateError);
+    	SmartDashboard.putNumber("I Component", Robot.shooter.iComponent);
+    	SmartDashboard.putNumber("P Component", Robot.shooter.pComponent);
         Scheduler.getInstance().run();
     }
     
