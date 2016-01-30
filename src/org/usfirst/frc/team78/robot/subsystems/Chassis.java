@@ -194,7 +194,7 @@ public class Chassis extends Subsystem {
     	}
     	return atTarget;
     	
-    }// end isAtTarget
+    }// end isAtTurnTarget
     
     public void setTurnSpeed(double speed){
     	setSpeed(speed, -speed);
