@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team78.robot.commands.DriveStraightDistance;
+import org.usfirst.frc.team78.robot.commands.DriveTime;
 import org.usfirst.frc.team78.robot.commands.DriveWithJoysticks;
 import org.usfirst.frc.team78.robot.commands.HeadingCorrection;
 import org.usfirst.frc.team78.robot.commands.MoveCam;
@@ -45,18 +46,20 @@ public class OI {
 		camStick = new Joystick(1);
 		
 		btnHoldHeading = new JoystickButton(driverStick, 2);
-		btnHoldHeading.whileHeld(new HeadingCorrection());
+		//btnHoldHeading.whileHeld(new HeadingCorrection());
 		
 		btnFiveFeet = new JoystickButton(driverStick, 1);
-		btnFiveFeet.whenPressed(new DriveStraightDistance(8));
-		btnFiveFeet.whenReleased(new DriveWithJoysticks());
+		//btnFiveFeet.whenPressed(new DriveTime(-.75, 300));
+		//btnFiveFeet.whenPressed(new DriveStraightDistance(8));
+		//btnFiveFeet.whenReleased(new DriveWithJoysticks());
 		
 		btnTurn = new JoystickButton(driverStick, 4);
-		btnTurn.whenPressed(new Turn(180));
-		btnTurn.whenReleased(new DriveWithJoysticks());
+		//btnTurn.whenPressed(new DriveTime(.75, 300));
+		//btnTurn.whenPressed(new Turn(180));
+		//btnTurn.whenReleased(new DriveWithJoysticks());
 		
 		btnSetShooterRate = new JoystickButton(camStick, 3);
-		btnSetShooterRate.whileHeld(new SetShooterRate(5000));
+		//btnSetShooterRate.whileHeld(new SetShooterRate(5000));
 		
 		/*btnFiveFeet = new JoystickButton(driverStick, 4);
 		btnFiveFeet.whenPressed(new DriveStraightDistance(5));

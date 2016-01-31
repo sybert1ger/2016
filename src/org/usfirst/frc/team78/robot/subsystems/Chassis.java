@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.Ultrasonic;
+import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -21,10 +22,10 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class Chassis extends Subsystem {
     
 	//MOTORS
-	Talon leftDrive1 = new Talon(RobotMap.LEFT_DRIVE_1);
-	Talon rightDrive1 = new Talon(RobotMap.RIGHT_DRIVE_1);
-	Talon leftDrive2 = new Talon(RobotMap.LEFT_DRIVE_2);
-	Talon rightDrive2 = new Talon(RobotMap.RIGHT_DRIVE_2);
+	Victor leftDrive1 = new Victor(RobotMap.LEFT_DRIVE_1);
+	Victor rightDrive1 = new Victor(RobotMap.RIGHT_DRIVE_1);
+	Victor leftDrive2 = new Victor(RobotMap.LEFT_DRIVE_2);
+	Victor rightDrive2 = new Victor(RobotMap.RIGHT_DRIVE_2);
 	
 	//SENSORS
 	AnalogGyro gyro = new AnalogGyro(RobotMap.GYRO);
@@ -62,7 +63,7 @@ public class Chassis extends Subsystem {
     public void driveWithJoysticks(){
     	double left = Robot.oi.getDriverLeftStick();
     	double right = Robot.oi.getDriverRightStick();
-    	setSpeed(left*.3, right*.3);
+    	setSpeed(left*1, right*1);
     }
     
     public void setSpeed(double left, double right){
