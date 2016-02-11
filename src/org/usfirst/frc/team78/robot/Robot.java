@@ -3,9 +3,12 @@ package org.usfirst.frc.team78.robot;
 
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.NamedSendable;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.networktables.NetworkTable;
 
 import org.usfirst.frc.team78.robot.commands.DoNothing;
 import org.usfirst.frc.team78.robot.subsystems.Chassis;
@@ -31,7 +34,12 @@ public class Robot extends IterativeRobot {
 
     Command autonomousCommand;
     SendableChooser chooser;
+    public static NetworkTable table;
+	double x = 0;
+	double y = 0;
 
+
+	
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
@@ -47,7 +55,8 @@ public class Robot extends IterativeRobot {
         server = CameraServer.getInstance();
     	server.setQuality(50);
     	server.startAutomaticCapture("cam0");
-    	
+
+    	table = NetworkTable.getTable("datatable");
     	
     }
 	
@@ -110,6 +119,8 @@ public class Robot extends IterativeRobot {
      * This function is called periodically during operator control
      */
     public void teleopPeriodic() {
+    	
+    	
     	SmartDashboard.putNumber("Gyro", Robot.chassis.getGyro()); 
     	SmartDashboard.putNumber("Left Enc", Robot.chassis.getLeftEnc());
     	SmartDashboard.putNumber("Right Enc", Robot.chassis.getRightEnc());
@@ -123,6 +134,20 @@ public class Robot extends IterativeRobot {
     	SmartDashboard.putNumber("Rate Error", Robot.shooter.rateError);
     	SmartDashboard.putNumber("I Component", Robot.shooter.iComponent);
     	SmartDashboard.putNumber("P Component", Robot.shooter.pComponent);
+    	
+    	
+    	 
+    	//Timer.delay(.025);
+    	//table.putNumber("x", x);
+    	//table.putNumber("y", y);
+    	//x += 1;
+    	//y += 2;
+    	SmartDashboard.putNumber("Jetson X", table.getDouble("X"));
+    	SmartDashboard.putNumber("Jetson Y", table.getDouble("Y"));
+
+    
+    	
+    	
         Scheduler.getInstance().run();
     }
     

@@ -6,9 +6,12 @@ import org.usfirst.frc.team78.robot.Robot;
 import org.usfirst.frc.team78.robot.RobotMap;
 import org.usfirst.frc.team78.robot.commands.DriveWithJoysticks;
 
+//import com.kauailabs.navx.frc.AHRS;
+
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.Timer;
@@ -32,16 +35,20 @@ public class Chassis extends Subsystem {
 	Encoder leftEnc = new Encoder(RobotMap.LEFT_ENC_A, RobotMap.LEFT_ENC_B);
 	Encoder rightEnc = new Encoder(RobotMap.RIGHT_ENC_A, RobotMap.RIGHT_ENC_B);
 	AnalogInput ultrasonic = new AnalogInput(1);
+	//AHRS ahrs = new AHRS(SPI.Port.kMXP); 
+
 	
 	//VARIABLES
 	double distanceError;
 	boolean timerStart = false;
 	public Boolean isTurnFinished = false;
 	
+	
 	//CONSTANTS
 	final double GYRO_P = (.01);
 	final double DISTANCEP = 0.0002;
 	final double TURN_P = .0035;
+//	public double TABLE_TEST = Robot.TABLE_TEST;
 	
 	//TIMER
 	Timer timer = new Timer();

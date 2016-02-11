@@ -7,6 +7,7 @@ import org.usfirst.frc.team78.robot.commands.MoveCam;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.networktables.NetworkTable;
 
 /**
  *
@@ -19,7 +20,6 @@ public class Vision extends Subsystem {
     //MOTORS
     Servo pan = new Servo(RobotMap.PAN);
     Servo tilt = new Servo(RobotMap.TILT);
-    
     
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
