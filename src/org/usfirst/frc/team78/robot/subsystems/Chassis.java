@@ -8,9 +8,15 @@ import org.usfirst.frc.team78.robot.commands.DriveWithJoysticks;
 
 //import com.kauailabs.navx.frc.AHRS;
 
+
+
+
+import com.kauailabs.navx.frc.AHRS;
+
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.AnalogGyro;
@@ -18,12 +24,14 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.Ultrasonic;
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.networktables.NetworkTable;
 
 /**
  *
  */
+
 public class Chassis extends Subsystem {
-    
+	
 	//MOTORS
 	Victor leftDrive1 = new Victor(RobotMap.LEFT_DRIVE_1);
 	Victor rightDrive1 = new Victor(RobotMap.RIGHT_DRIVE_1);
@@ -31,24 +39,27 @@ public class Chassis extends Subsystem {
 	Victor rightDrive2 = new Victor(RobotMap.RIGHT_DRIVE_2);
 	
 	//SENSORS
-	AnalogGyro gyro = new AnalogGyro(RobotMap.GYRO);
+	//AnalogGyro gyro = new AnalogGyro(RobotMap.GYRO);
 	Encoder leftEnc = new Encoder(RobotMap.LEFT_ENC_A, RobotMap.LEFT_ENC_B);
 	Encoder rightEnc = new Encoder(RobotMap.RIGHT_ENC_A, RobotMap.RIGHT_ENC_B);
 	AnalogInput ultrasonic = new AnalogInput(1);
-	//AHRS ahrs = new AHRS(SPI.Port.kMXP); 
+	AHRS ahrs = new AHRS(SPI.Port.kMXP);
+		//download from here http://www.pdocs.kauailabs.com/navx-mxp/software/roborio-libraries/java/
+		//install it all
+		//Window->Preferences->Java->Build Path->Classpath Variables->New
+		//make a new variable called navx-mxp from <HomeDirectory>\navx-mxp\java\lib\navx_frc.jar
+		//right click Referenced Libraries, add the new variable
 
 	
 	//VARIABLES
-	double distanceError;
-	boolean timerStart = false;
-	public Boolean isTurnFinished = false;
+	Boolean timerStart = false;
 	
 	
 	//CONSTANTS
 	final double GYRO_P = (.01);
-	final double DISTANCEP = 0.0002;
+	final double DISTANCE_P = 0.0002;
 	final double TURN_P = .0035;
-//	public double TABLE_TEST = Robot.TABLE_TEST;
+
 	
 	//TIMER
 	Timer timer = new Timer();
@@ -89,8 +100,8 @@ public class Chassis extends Subsystem {
  //AUTO METHODS  
     
     public void driveStraightDistance(double distance){
-    	distanceError = (distance - ((getLeftEnc() + getRightEnc()) / 2));
-    	double speed = distanceError*DISTANCEP;
+    	double distanceError = (distance - ((getLeftEnc() + getRightEnc()) / 2));
+    	double speed = distanceError*DISTANCE_P;
     	
     	if (distanceError > 3000){
     		speed = .45;
@@ -106,7 +117,7 @@ public class Chassis extends Subsystem {
     		speed = -.15;
     	}
     	
-    	double driftError = getGyro();
+    	double driftError = getAngle();
     	setSpeed(speed-((GYRO_P)*driftError), speed+((GYRO_P)*driftError));
     	
     }//end driveStraightDistance
@@ -139,14 +150,13 @@ public class Chassis extends Subsystem {
     
     	}
     	
-    	
     	return atTarget;
     	
     }// end isAtDistanceTarget
     
     
     public void headingCorrection (double heading){
-    	double driftError = heading - getGyro();
+    	double driftError = heading - getAngle();
     	setSpeed(((GYRO_P)*driftError), -((GYRO_P)*driftError));
     	
     }//end headingCorrection
@@ -154,7 +164,7 @@ public class Chassis extends Subsystem {
     
     public void turnAngle(double target){
     	double speed;
-    	double error = target- getGyro();
+    	double error = target- getAngle();
     	speed = TURN_P*(error);
     	
     	if (speed > .7){
@@ -177,7 +187,7 @@ public class Chassis extends Subsystem {
     public boolean isAtTurnTarget(double target){
     	boolean atTarget = false;
     	
-    	double current = getGyro();
+    	double current = getAngle();
     	
     	if (current < (target+5) && current > (target-5)){
     		if(timerStart == false){
@@ -198,7 +208,6 @@ public class Chassis extends Subsystem {
     	
     	if(timer.get() >.25){
     		atTarget = true;
-    		isTurnFinished = true;
     	}
     	return atTarget;
     	
@@ -212,12 +221,18 @@ public class Chassis extends Subsystem {
  //______________________________________________________________________________ 
  //SENSOR METHODS  
   
-    public double getGyro(){
-    	return gyro.getAngle();
-    }
+   // public double getGyro(){
+    	//return gyro.getAngle();
+    //}
     
     public void resetSensorData(){
-    	gyro.reset();
+    	//gyro.reset();
+    	leftEnc.reset();
+    	rightEnc.reset();
+    	ahrs.reset();
+    }
+    
+    public void resetEncs(){
     	leftEnc.reset();
     	rightEnc.reset();
     }
@@ -233,15 +248,17 @@ public class Chassis extends Subsystem {
     public double getUltra(){
     	return ((double)ultrasonic.getValue() - 20.0)/120.0;//converts to feet, established through test distances
     }
+    
+    
+    public double getAngle(){
+    	return ahrs.getAngle();//just look at all the differnet gets, figure out what is going on
+    }
+    
+    public double getPitch(){
+    	return ahrs.getPitch();//just look at all the differnet gets, figure out what is going on
+    }
+    
+    public double getRoll(){
+    	return ahrs.getRoll();//just look at all the differnet gets, figure out what is going on
+    }
 }
-
-
-
-
-
-
-
-
-
-
-

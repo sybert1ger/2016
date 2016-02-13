@@ -4,6 +4,7 @@ package org.usfirst.frc.team78.robot;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.NamedSendable;
+import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -35,8 +36,8 @@ public class Robot extends IterativeRobot {
     Command autonomousCommand;
     SendableChooser chooser;
     public static NetworkTable table;
-	double x = 0;
-	double y = 0;
+	//double x = 0;
+	// y = 0;
 
 
 	
@@ -57,7 +58,7 @@ public class Robot extends IterativeRobot {
     	server.startAutomaticCapture("cam0");
 
     	table = NetworkTable.getTable("datatable");
-    	
+  
     }
 	
 	/**
@@ -121,7 +122,7 @@ public class Robot extends IterativeRobot {
     public void teleopPeriodic() {
     	
     	
-    	SmartDashboard.putNumber("Gyro", Robot.chassis.getGyro()); 
+    	//SmartDashboard.putNumber("Gyro", Robot.chassis.getGyro()); 
     	SmartDashboard.putNumber("Left Enc", Robot.chassis.getLeftEnc());
     	SmartDashboard.putNumber("Right Enc", Robot.chassis.getRightEnc());
     	SmartDashboard.putNumber("Right Stick", Robot.oi.getDriverRightStick());
@@ -134,16 +135,18 @@ public class Robot extends IterativeRobot {
     	SmartDashboard.putNumber("Rate Error", Robot.shooter.rateError);
     	SmartDashboard.putNumber("I Component", Robot.shooter.iComponent);
     	SmartDashboard.putNumber("P Component", Robot.shooter.pComponent);
-    	
-    	
+    	SmartDashboard.putNumber("Get Angle", Robot.chassis.getAngle());
+    	SmartDashboard.putNumber("Get Pitch", Robot.chassis.getPitch());
+    	SmartDashboard.putNumber("Get Roll", Robot.chassis.getRoll());
+    	SmartDashboard.putNumber("Jetson X", Robot.vision.getVisionX());
+    	SmartDashboard.putNumber("Jetson Y", Robot.vision.getVisionY());
+
     	 
     	//Timer.delay(.025);
     	//table.putNumber("x", x);
     	//table.putNumber("y", y);
     	//x += 1;
     	//y += 2;
-    	SmartDashboard.putNumber("Jetson X", table.getDouble("X"));
-    	SmartDashboard.putNumber("Jetson Y", table.getDouble("Y"));
 
     
     	

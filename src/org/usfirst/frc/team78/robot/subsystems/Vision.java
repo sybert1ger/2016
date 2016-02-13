@@ -33,6 +33,13 @@ public class Vision extends Subsystem {
     	tilt.set((Robot.oi.getCamY()/2) + 0.5);
     }
     
+    public double getVisionX(){
+    	return Robot.table.getDouble("X");
+    }
+    
+    public double getVisionY(){
+    	return Robot.table.getDouble("Y");
+    }
 
 }
 

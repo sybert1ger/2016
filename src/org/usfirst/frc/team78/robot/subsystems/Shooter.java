@@ -99,8 +99,11 @@ public class Shooter extends Subsystem {
     
     public double getShooterRate(){
     	return rightEnc.getRate() * 10;//convert to wheel rpm output
-    	
-    }//end getShooterRate
+    }
+    
+    public void resetSensorData(){
+    	rightEnc.reset();
+    }
     
 }
 
