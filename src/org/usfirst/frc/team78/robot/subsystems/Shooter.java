@@ -3,6 +3,7 @@ package org.usfirst.frc.team78.robot.subsystems;
 import org.usfirst.frc.team78.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.CANTalon;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.Timer;
@@ -17,6 +18,10 @@ public class Shooter extends Subsystem {
 	//MOTORS
 	CANTalon rightShooter = new CANTalon(RobotMap.RIGHT_SHOOTER);
 	CANTalon leftShooter = new CANTalon(RobotMap.LEFT_SHOOTER);
+	
+	//Solenoid
+	DoubleSolenoid lift = new DoubleSolenoid(RobotMap.SHOOTER_FOREWARD, RobotMap.SHOOTER_REVERSE);
+	DoubleSolenoid pan = new DoubleSolenoid(RobotMap.SHOOTER_PAN_FOREWARD, RobotMap.SHOOTER_PAN_REVERSE);
 	
 	//SENSORS
 	Encoder rightEnc = new Encoder(RobotMap.RIGHT_SHOOTER_ENC_A, RobotMap.RIGHT_SHOOTER_ENC_B);
@@ -94,6 +99,8 @@ public class Shooter extends Subsystem {
     	
     }// end isAtTurnTarget
     
+
+    
 //____________________________________________________________________________________________________________________________
 //SENSOR METHODS
     
@@ -109,6 +116,21 @@ public class Shooter extends Subsystem {
     	rightEnc.reset();
     	leftEnc.reset();
     }
+//____________________________________________________________________________________________________________________________________________
+//pnumatic methods
     
+    public void liftShooter(){
+    	lift.set(DoubleSolenoid.Value.kForward);
+    }
+    public void lowerShooter(){
+    	lift.set(DoubleSolenoid.Value.kReverse);
+    }
+    
+    public void panIn(){
+    	pan.set(DoubleSolenoid.Value.kForward);
+    }
+    public void panOut(){
+    	pan.set(DoubleSolenoid.Value.kReverse);
+    }
 }
 

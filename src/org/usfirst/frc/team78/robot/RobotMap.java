@@ -24,6 +24,14 @@ public class RobotMap {
 	final static public int RIGHT_SHOOTER = 6;
 	final static public int LEFT_SHOOTER = 7;*/
 	
+	//SOLENOIDS
+	final static public int SHOOTER_FOREWARD = 0;
+	final static public int SHOOTER_REVERSE = 1;
+	final static public int SHOOTER_PAN_FOREWARD = 4;
+	final static public int SHOOTER_PAN_REVERSE = 5;
+	final static public int INTAKE_FOREWARD = 2;
+	final static public int INTAKE_REVERSE = 3;
+	
 	
 	//ANALOG SENSORS
 	final static public int GYRO = 0;
