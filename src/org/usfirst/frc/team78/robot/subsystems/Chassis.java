@@ -52,7 +52,9 @@ public class Chassis extends Subsystem {
 
 	
 	//VARIABLES
-	Boolean timerStart = false;
+	public Boolean timerStart = false;
+	public boolean atTarget = false;
+	public double testTarget;
 	
 	
 	//CONSTANTS
@@ -63,6 +65,10 @@ public class Chassis extends Subsystem {
 	
 	//TIMER
 	Timer timer = new Timer();
+	
+	public double correctTarget;
+	public double current;
+	public int step = 0;
 	
 	
 	
@@ -99,7 +105,7 @@ public class Chassis extends Subsystem {
  //______________________________________________________________________________ 
  //AUTO METHODS  
     
-    public void driveStraightDistance(double distance){
+    public double driveStraightDistance(double distance){
     	double distanceError = (distance - ((getLeftEnc() + getRightEnc()) / 2));
     	double speed = distanceError*DISTANCE_P;
     	
@@ -117,8 +123,10 @@ public class Chassis extends Subsystem {
     		speed = -.15;
     	}
     	
-    	double driftError = getAngle();
-    	setSpeed(speed-((GYRO_P)*driftError), speed+((GYRO_P)*driftError));
+    	return speed;
+    	
+    	//double driftError = getAngle();
+    	//setSpeed(speed-((GYRO_P)*driftError), speed+((GYRO_P)*driftError));
     	
     }//end driveStraightDistance
     
@@ -155,16 +163,27 @@ public class Chassis extends Subsystem {
     }// end isAtDistanceTarget
     
     
-    public void headingCorrection (double heading){
+    public double headingCorrection (double heading){
     	double driftError = heading - getAngle();
-    	setSpeed(((GYRO_P)*driftError), -((GYRO_P)*driftError));
+    	
+    	return ((GYRO_P)*driftError);
+    	//setSpeed(((GYRO_P)*driftError), -((GYRO_P)*driftError));
     	
     }//end headingCorrection
     
     
-    public void turnAngle(double target){
+    public double turnAngleAdditional(double target){
+    	step = 1;
     	double speed;
-    	double error = target- getAngle();
+    	double error = target - getAngle();
+    	
+    	if (error < -180){
+    		error = error + 360;
+    	}
+    	else if (error > 360){
+    		error = error - 360;
+    	}
+    	
     	speed = TURN_P*(error);
     	
     	if (speed > .7){
@@ -181,33 +200,61 @@ public class Chassis extends Subsystem {
     		speed = -.1;
     	}
     	
-    	setTurnSpeed(speed);
+    	return speed;
+    	//setTurnSpeed(speed);
     }
     
     public boolean isAtTurnTarget(double target){
-    	boolean atTarget = false;
+    	step = 2;
+    	correctTarget = (target % 360);
+    	atTarget = false;
     	
-    	double current = getAngle();
+    	 current = getAngle();
     	
-    	if (current < (target+5) && current > (target-5)){
-    		if(timerStart == false){
-    			timerStart = true;
-    			timer.start();
-    		}
+    	if (correctTarget <= 5 || correctTarget >= 355){//weird low angle cases
+    		if (current < (correctTarget + 5) || current > (355 + correctTarget)){
+    			if(timerStart == false){
+    				timerStart = true;
+    				timer.start();
+    			}
     		
-    	}
-    	
-    	else{
-    		
-    		if(timerStart == true){
-    			timer.stop();
-    			timer.reset();
-    			timerStart = false;
     		}
-    	}
     	
-    	if(timer.get() >.25){
-    		atTarget = true;
+    		else{
+    		
+    			if(timerStart == true){
+    				timer.stop();
+    				timer.reset();
+    				timerStart = false;
+    			}
+    		}
+    	
+    		if(timer.get() >.25){
+    			atTarget = true;
+    		}
+    	}//end weird low angle cases
+    	
+    	else{//regular cases
+    		if (current < (correctTarget + 5) && current > (correctTarget - 5)){
+    			if(timerStart == false){
+    				timerStart = true;
+    				timer.start();
+    			}
+    		
+    		}
+    	
+    		else{
+    		
+    			if(timerStart == true){
+    				timer.stop();
+    				timer.reset();
+    				timerStart = false;
+    			}
+    		}
+    	
+    		if(timer.get() >.25){
+    			atTarget = true;
+    		}
     	}
     	return atTarget;
     	
@@ -251,14 +298,18 @@ public class Chassis extends Subsystem {
     
     
     public double getAngle(){
-    	return ahrs.getAngle();//just look at all the differnet gets, figure out what is going on
+    	return ahrs.getAngle();//just look at all the different gets, figure out what is going on
     }
     
     public double getPitch(){
-    	return ahrs.getPitch();//just look at all the differnet gets, figure out what is going on
+    	return ahrs.getPitch();//just look at all the different gets, figure out what is going on
     }
     
     public double getRoll(){
-    	return ahrs.getRoll();//just look at all the differnet gets, figure out what is going on
+    	return ahrs.getRoll();//just look at all the different gets, figure out what is going on
+    }
+    
+    public double getRawGyro(){
+    	return ahrs.getRawGyroX();
     }
 }

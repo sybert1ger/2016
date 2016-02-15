@@ -10,6 +10,9 @@ import edu.wpi.first.wpilibj.command.Command;
 public class DriveStraightDistance extends Command {
 
 	double m_distance_clicks;
+	double startHeading;
+	double rightSpeed;
+	double leftSpeed;
 	
 	
     public DriveStraightDistance(double feet) {
@@ -17,17 +20,25 @@ public class DriveStraightDistance extends Command {
         // eg. requires(chassis);
     	requires(Robot.chassis);
     	m_distance_clicks = feet * 670;
+
     	//setTimeout(17);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
     	Robot.chassis.resetEncs();
+    	startHeading = Robot.chassis.getAngle();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.chassis.driveStraightDistance(m_distance_clicks);
+    	leftSpeed = Robot.chassis.driveStraightDistance(m_distance_clicks);
+    	rightSpeed = leftSpeed;
+    	
+    	leftSpeed = leftSpeed + Robot.chassis.headingCorrection(startHeading);
+    	rightSpeed = rightSpeed - Robot.chassis.headingCorrection(startHeading);
+    	
+    	Robot.chassis.setSpeed(leftSpeed, rightSpeed);
     }
 
     // Make this return true when this Command no longer needs to run execute()

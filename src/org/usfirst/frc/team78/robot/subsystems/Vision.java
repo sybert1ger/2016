@@ -2,7 +2,7 @@ package org.usfirst.frc.team78.robot.subsystems;
 
 import org.usfirst.frc.team78.robot.Robot;
 import org.usfirst.frc.team78.robot.RobotMap;
-import org.usfirst.frc.team78.robot.commands.MoveCam;
+
 
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.Servo;
@@ -17,28 +17,42 @@ public class Vision extends Subsystem {
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 	
-    //MOTORS
-    Servo pan = new Servo(RobotMap.PAN);
-    Servo tilt = new Servo(RobotMap.TILT);
     
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
-    	setDefaultCommand(new MoveCam());
+    	//setDefaultCommand();
     }
     
     
-    public void moveCam(){
+    /*public void moveCam(){
     	pan.set((Robot.oi.getCamX()/2) + 0.5);
     	tilt.set((Robot.oi.getCamY()/2) + 0.5);
-    }
+    }*/
     
     public double getVisionX(){
-    	return Robot.table.getDouble("X");
-    }
+    	double X = 0;
+    	try {
+    		X = Robot.table.getDouble("X");
+    	} catch ( Exception e){
+    		return 0;
+    	}
+    	return X;
+    	}
     
     public double getVisionY(){
-    	return Robot.table.getDouble("Y");
+    	//return Robot.table.getDouble("Y");
+    	double Y = 0;
+    	try {
+    		Y = Robot.table.getDouble("X");
+    	} catch ( Exception e){
+    		return 0;
+    	}
+    	return Y;
+    
+    
+    
+    
     }
 
 }

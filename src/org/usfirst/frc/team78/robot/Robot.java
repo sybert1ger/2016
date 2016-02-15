@@ -2,6 +2,7 @@
 package org.usfirst.frc.team78.robot;
 
 import edu.wpi.first.wpilibj.CameraServer;
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.NamedSendable;
 import edu.wpi.first.wpilibj.PIDController;
@@ -13,6 +14,7 @@ import edu.wpi.first.wpilibj.networktables.NetworkTable;
 
 import org.usfirst.frc.team78.robot.commands.DoNothing;
 import org.usfirst.frc.team78.robot.subsystems.Chassis;
+import org.usfirst.frc.team78.robot.subsystems.Intake;
 import org.usfirst.frc.team78.robot.subsystems.Shooter;
 import org.usfirst.frc.team78.robot.subsystems.Vision;
 
@@ -31,13 +33,13 @@ public class Robot extends IterativeRobot {
 	public static final Chassis chassis = new Chassis();
 	public static final Vision vision = new Vision();
 	public static final Shooter shooter = new Shooter();
+	public static final Intake intake = new Intake();
 	public static OI oi;
 
     Command autonomousCommand;
     SendableChooser chooser;
     public static NetworkTable table;
-	//double x = 0;
-	// y = 0;
+
 
 
 	
@@ -58,6 +60,9 @@ public class Robot extends IterativeRobot {
     	server.startAutomaticCapture("cam0");
 
     	table = NetworkTable.getTable("datatable");
+    	
+    	Compressor c = new Compressor(0);
+    	c.setClosedLoopControl(true);
   
     }
 	
@@ -121,36 +126,33 @@ public class Robot extends IterativeRobot {
      */
     public void teleopPeriodic() {
     	
-    	
-    	//SmartDashboard.putNumber("Gyro", Robot.chassis.getGyro()); 
+    	//SENSOR DATA
     	SmartDashboard.putNumber("Left Enc", Robot.chassis.getLeftEnc());
     	SmartDashboard.putNumber("Right Enc", Robot.chassis.getRightEnc());
     	SmartDashboard.putNumber("Right Stick", Robot.oi.getDriverRightStick());
     	SmartDashboard.putNumber("Left Stick", Robot.oi.getDriverLeftStick());
-    	SmartDashboard.putNumber("Cam X", Robot.oi.getCamX());
-    	SmartDashboard.putNumber("Cam Y", Robot.oi.getCamY());
-    	SmartDashboard.putNumber("Shooter Rate", Robot.shooter.getShooterRate());
-    	SmartDashboard.putNumber("Ultrasonic", Robot.chassis.getUltra());
-    	SmartDashboard.putNumber("Shooter Speed", Robot.shooter.shooterSpeed);
-    	SmartDashboard.putNumber("Rate Error", Robot.shooter.rateError);
-    	SmartDashboard.putNumber("I Component", Robot.shooter.iComponent);
-    	SmartDashboard.putNumber("P Component", Robot.shooter.pComponent);
+    	SmartDashboard.putNumber("Shooter Rate", Robot.shooter.getRightShooterRate());
     	SmartDashboard.putNumber("Get Angle", Robot.chassis.getAngle());
     	SmartDashboard.putNumber("Get Pitch", Robot.chassis.getPitch());
     	SmartDashboard.putNumber("Get Roll", Robot.chassis.getRoll());
+    	
+    	//VISION
     	SmartDashboard.putNumber("Jetson X", Robot.vision.getVisionX());
     	SmartDashboard.putNumber("Jetson Y", Robot.vision.getVisionY());
-
-    	 
-    	//Timer.delay(.025);
-    	//table.putNumber("x", x);
-    	//table.putNumber("y", y);
-    	//x += 1;
-    	//y += 2;
+    	
+    	//PROGRAM TESTS
+    	SmartDashboard.putNumber("Step", Robot.chassis.step);
+    	SmartDashboard.putNumber("Shooter Speed", Robot.shooter.shooterSpeed);
+    	SmartDashboard.putBoolean("Timer", Robot.chassis.timerStart);
+    	SmartDashboard.putNumber("CorrectTarget", Robot.chassis.correctTarget);
+    	SmartDashboard.putNumber("current", Robot.chassis.current);
+    	SmartDashboard.putNumber("Rate Error", Robot.shooter.rateError);
+    	SmartDashboard.putNumber("I Component", Robot.shooter.iComponent);
+    	SmartDashboard.putNumber("P Component", Robot.shooter.pComponent);
+    	SmartDashboard.putNumber("Raw Gyro", Robot.chassis.getRawGyro());
 
     
-    	
-    	
+        	
         Scheduler.getInstance().run();
     }
     

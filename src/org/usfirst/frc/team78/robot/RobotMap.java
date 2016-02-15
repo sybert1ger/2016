@@ -10,12 +10,19 @@ public class RobotMap {
 	
 	//MOTORS(PWN)
 	final static public int LEFT_DRIVE_1 = 0;
-	final static public int RIGHT_DRIVE_1 = 2;
 	final static public int LEFT_DRIVE_2 = 1;
+	final static public int RIGHT_DRIVE_1 = 2;
 	final static public int RIGHT_DRIVE_2 = 3;
-	final static public int PAN = 4;
+	
+	//MOTORS(CAN)
+	final static public int LEFT_SHOOTER = 0;
+	final static public int RIGHT_SHOOTER = 1;
+	final static public int LEFT_INTAKE = 3;
+	final static public int RIGHT_INTAKE = 2;
+	/*final static public int PAN = 4;
 	final static public int TILT = 5;
 	final static public int RIGHT_SHOOTER = 6;
+	final static public int LEFT_SHOOTER = 7;*/
 	
 	
 	//ANALOG SENSORS
@@ -29,6 +36,8 @@ public class RobotMap {
 	final static public int RIGHT_ENC_B = 3;
 	final static public int RIGHT_SHOOTER_ENC_A = 4;
 	final static public int RIGHT_SHOOTER_ENC_B = 5;
+	final static public int LEFT_SHOOTER_ENC_A = 6;
+	final static public int LEFT_SHOOTER_ENC_B = 7;
 	
 	
     // For example to map the left and right motors, you could define the

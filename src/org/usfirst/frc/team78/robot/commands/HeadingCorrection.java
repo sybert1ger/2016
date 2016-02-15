@@ -9,6 +9,9 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class HeadingCorrection extends Command {
 
+	double startAngle;
+	double speed;
+	
     public HeadingCorrection() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
@@ -17,12 +20,14 @@ public class HeadingCorrection extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.chassis.resetSensorData();
+    	startAngle = Robot.chassis.getAngle();
+    	//Robot.chassis.resetSensorData();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.chassis.headingCorrection(0);
+    	speed = Robot.chassis.headingCorrection(startAngle);
+    	Robot.chassis.setTurnSpeed(speed);
     }
 
     // Make this return true when this Command no longer needs to run execute()

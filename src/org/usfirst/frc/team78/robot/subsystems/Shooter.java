@@ -2,6 +2,7 @@ package org.usfirst.frc.team78.robot.subsystems;
 
 import org.usfirst.frc.team78.robot.RobotMap;
 
+import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.Timer;
@@ -14,10 +15,12 @@ public class Shooter extends Subsystem {
     
 
 	//MOTORS
-	Talon rightShooter = new Talon(RobotMap.RIGHT_SHOOTER);
+	CANTalon rightShooter = new CANTalon(RobotMap.RIGHT_SHOOTER);
+	CANTalon leftShooter = new CANTalon(RobotMap.LEFT_SHOOTER);
 	
 	//SENSORS
 	Encoder rightEnc = new Encoder(RobotMap.RIGHT_SHOOTER_ENC_A, RobotMap.RIGHT_SHOOTER_ENC_B);
+	Encoder leftEnc = new Encoder(RobotMap.LEFT_SHOOTER_ENC_A, RobotMap.LEFT_SHOOTER_ENC_B);
 	
 	//VARIABLES
 	public double shooterSpeed = 0;
@@ -43,10 +46,11 @@ public class Shooter extends Subsystem {
     
     public void setShooterSpeed(double speed){
     	rightShooter.set(speed);
+    	leftShooter.set(-speed);
     }
     
-    public void setShooterRate(double rate){
-    	rateError = rate - getShooterRate();
+    public void setRightShooterRate(double rate){
+    	rateError = rate - getRightShooterRate();
     	pComponent = (SHOOTER_P)*rateError;
     	iComponent = (SHOOTER_I)*(rateError + (2/3)*iComponent);
     	//iComponent = rateError + iComponent;
@@ -64,7 +68,7 @@ public class Shooter extends Subsystem {
     public boolean isAtShooterRate (double targetRate){
     	boolean atRate = false;
     	
-    	double current = getShooterRate();
+    	double current = getRightShooterRate();
     	
     	if (current < (targetRate+250) && current > (targetRate-250)){
     		if(timerStart == false){
@@ -94,15 +98,16 @@ public class Shooter extends Subsystem {
 //SENSOR METHODS
     
     public double getRightShooterEnc(){
-    	return rightEnc.getRaw();
+    	return -rightEnc.getRaw();
     }
     
-    public double getShooterRate(){
-    	return rightEnc.getRate() * 10;//convert to wheel rpm output
+    public double getRightShooterRate(){
+    	return -rightEnc.getRate() * 10;//convert to wheel rpm output
     }
     
     public void resetSensorData(){
     	rightEnc.reset();
+    	leftEnc.reset();
     }
     
 }

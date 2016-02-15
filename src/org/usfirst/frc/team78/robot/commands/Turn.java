@@ -10,6 +10,9 @@ import edu.wpi.first.wpilibj.command.Command;
 public class Turn extends Command {
 
 	double m_angle;
+	double startAngle;
+	double target;
+	double speed;
 	
     public Turn(double angle) {
         // Use requires() here to declare subsystem dependencies
@@ -21,12 +24,15 @@ public class Turn extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
     	//Robot.chassis.resetSensorData();
+    	//startAngle = Robot.chassis.getAngle();
+    	
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	double currentAngle = Robot.chassis.getAngle();
-    	Robot.chassis.turnAngle(currentAngle + m_angle);
+    	speed = Robot.chassis.turnAngleAdditional((m_angle));
+    	
+    	Robot.chassis.setTurnSpeed(speed);
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -37,6 +43,8 @@ public class Turn extends Command {
     // Called once after isFinished returns true
     protected void end() {
     	Robot.chassis.stopAllDrive();
+    	Robot.chassis.timerStart = false;
+    	Robot.chassis.atTarget = false;
     }
 
     // Called when another command which requires one or more of the same

@@ -9,8 +9,10 @@ import org.usfirst.frc.team78.robot.commands.DriveStraightDistance;
 import org.usfirst.frc.team78.robot.commands.DriveTime;
 import org.usfirst.frc.team78.robot.commands.DriveWithJoysticks;
 import org.usfirst.frc.team78.robot.commands.HeadingCorrection;
-import org.usfirst.frc.team78.robot.commands.MoveCam;
+import org.usfirst.frc.team78.robot.commands.ResetSensors;
+import org.usfirst.frc.team78.robot.commands.SetIntakeSpeed;
 import org.usfirst.frc.team78.robot.commands.SetShooterRate;
+import org.usfirst.frc.team78.robot.commands.SetShooterSpeed;
 import org.usfirst.frc.team78.robot.commands.Turn;
 
 
@@ -23,14 +25,18 @@ public class OI {
 	
 	//JOYSTICKS
 	public Joystick driverStick;
-	public Joystick camStick;
+	public Joystick manipulatorStick;
 	
 	
-	//BUTTONS
-	public Button btnHoldHeading;
-	public Button btnFiveFeet;
-	public Button btnTurn;
-	public Button btnSetShooterRate;
+	//DRIVER BUTTONS
+	public Button btn1;
+	public Button btn2;
+	public Button btn3;
+	public Button btn4;
+	public Button btn5;
+	
+	//MANIPULATOR BUTTONS
+	public Button btn1M;
 
 	
 	
@@ -43,29 +49,37 @@ public class OI {
 	
 	public OI(){
 		driverStick = new Joystick(0);
-		camStick = new Joystick(1);
+		manipulatorStick = new Joystick(1);
 		
-		btnHoldHeading = new JoystickButton(driverStick, 2);
-		//btnHoldHeading.whileHeld(new HeadingCorrection());
+		btn1 = new JoystickButton(driverStick, 1);
+		btn1.whenPressed(new Turn(90.0));
+		//btn1.whileHeld(new HeadingCorrection());
 		
-		btnFiveFeet = new JoystickButton(driverStick, 1);
+		//btn2 = new JoystickButton(driverStick, 2);
+		//btn2.whenPressed(new Turn(0.0));
+		//btnFiveFeet.whenPressed(new SetShooterRate(7000));
 		//btnFiveFeet.whenPressed(new DriveTime(-.75, 300));
 		//btnFiveFeet.whenPressed(new DriveStraightDistance(8));
 		//btnFiveFeet.whenReleased(new DriveWithJoysticks());
 		
-		btnTurn = new JoystickButton(driverStick, 4);
+		btn2 = new JoystickButton(driverStick, 2);
+		btn2.whenPressed(new ResetSensors());
+		
+		btn3 = new JoystickButton(driverStick, 3);
+		btn3.whileHeld(new SetIntakeSpeed(.5));
+		
+		btn4 = new JoystickButton(driverStick, 4);
+		btn4.whileHeld(new SetShooterSpeed(.5));
+		
+		
+		
 		//btnTurn.whenPressed(new DriveTime(.75, 300));
 		//btnTurn.whenPressed(new Turn(180));
 		//btnTurn.whenReleased(new DriveWithJoysticks());
 		
-		btnSetShooterRate = new JoystickButton(camStick, 3);
+		//btnSetShooterRate = new JoystickButton(camStick, 3);
 		//btnSetShooterRate.whileHeld(new SetShooterRate(5000));
-		
-		/*btnFiveFeet = new JoystickButton(driverStick, 4);
-		btnFiveFeet.whenPressed(new DriveStraightDistance(5));
-		btnFiveFeet.whenReleased(new DriveWithJoysticks());*/
-		
-		//SmartDashboard.putData(new StartVision());
+
 	}
 	
 	///DRIVER STICK
@@ -87,23 +101,7 @@ public class OI {
 			return -stick;
 	}
 	
-	public double getCamX(){
-		double stick = camStick.getX();
-		if (Math.abs(stick) < STICK_DEADZONE){
-			return 0;
-		}
-		else
-			return stick;
-	}
 	
-	public double getCamY(){
-		double stick = camStick.getY();
-		if (Math.abs(stick) < STICK_DEADZONE){
-			return 0;
-		}
-		else
-			return stick;
-	}
 	
     //// CREATING BUTTONS
     // One type of button is a joystick button which is any button on a joystick.
