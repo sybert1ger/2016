@@ -42,6 +42,10 @@ public class TurnAdditional extends Command {
     // Called once after isFinished returns true
     protected void end() {
     	Robot.chassis.stopAllDrive();
+    	Robot.chassis.timerStart = false;
+    	Robot.chassis.atTarget = false;
+    	Robot.chassis.timer.stop();
+    	Robot.chassis.timer.reset();
     }
 
     // Called when another command which requires one or more of the same

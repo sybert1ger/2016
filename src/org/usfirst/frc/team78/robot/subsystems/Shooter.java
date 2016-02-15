@@ -33,6 +33,8 @@ public class Shooter extends Subsystem {
 	public double iComponent = 0;
 	public double rateError;
 	boolean timerStart = false;
+	public boolean shooterPnState = false;
+	public boolean pancakePnState = false;
 	
 	//CONSTANTS
 	final double SHOOTER_P = .0000034;
@@ -119,18 +121,23 @@ public class Shooter extends Subsystem {
 //____________________________________________________________________________________________________________________________________________
 //pnumatic methods
     
-    public void liftShooter(){
-    	lift.set(DoubleSolenoid.Value.kForward);
-    }
-    public void lowerShooter(){
-    	lift.set(DoubleSolenoid.Value.kReverse);
+    public void moveShooter(boolean state){
+    	if(state == true){
+    		lift.set(DoubleSolenoid.Value.kForward);
+    	}
+    	else{
+    		lift.set(DoubleSolenoid.Value.kReverse);
+    	}
     }
     
-    public void panIn(){
-    	pan.set(DoubleSolenoid.Value.kForward);
+    public void movePancake(boolean state){
+    	if(state == true){
+    		pan.set(DoubleSolenoid.Value.kForward);
+    	}
+    	else{
+    		pan.set(DoubleSolenoid.Value.kReverse);
+    	}
     }
-    public void panOut(){
-    	pan.set(DoubleSolenoid.Value.kReverse);
-    }
+    
 }
 

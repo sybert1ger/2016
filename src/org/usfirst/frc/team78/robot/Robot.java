@@ -63,6 +63,9 @@ public class Robot extends IterativeRobot {
     	
     	Compressor c = new Compressor(0);
     	c.setClosedLoopControl(true);
+    	intake.moveIntake(intake.intakePnState);
+    	shooter.movePancake(shooter.pancakePnState);
+    	shooter.moveShooter(intake.intakePnState);
   
     }
 	

@@ -64,7 +64,7 @@ public class Chassis extends Subsystem {
 
 	
 	//TIMER
-	Timer timer = new Timer();
+	public Timer timer = new Timer();
 	
 	public double correctTarget;
 	public double current;
@@ -209,53 +209,36 @@ public class Chassis extends Subsystem {
     	correctTarget = (target % 360);
     	atTarget = false;
     	
-    	 current = getAngle();
+    	double error = target - getAngle();
     	
-    	if (correctTarget <= 5 || correctTarget >= 355){//weird low angle cases
-    		if (current < (correctTarget + 5) || current > (355 + correctTarget)){
-    			if(timerStart == false){
-    				timerStart = true;
-    				timer.start();
-    			}
-    		
-    		}
-    	
-    		else{
-    		
-    			if(timerStart == true){
-    				timer.stop();
-    				timer.reset();
-    				timerStart = false;
-    			}
-    		}
-    	
-    		if(timer.get() >.25){
-    			atTarget = true;
-    		}
-    	}//end weird low angle cases
-    	
-    	else{//regular cases
-    		if (current < (correctTarget + 5) && current > (correctTarget - 5)){
-    			if(timerStart == false){
-    				timerStart = true;
-    				timer.start();
-    			}
-    		
-    		}
-    	
-    		else{
-    		
-    			if(timerStart == true){
-    				timer.stop();
-    				timer.reset();
-    				timerStart = false;
-    			}
-    		}
-    	
-    		if(timer.get() >.25){
-    			atTarget = true;
-    		}
+    	if (error < -180){
+    		error = error + 360;
     	}
+    	else if (error > 360){
+    		error = error - 360;
+    	}
+
+    	if ((error < 5) && (error > -5)){
+    		if(timerStart == false){
+   				timerStart = true;
+   				timer.start();
+   			}
+    		
+   		}
+   	
+   		else{
+   		
+   			if(timerStart == true){
+    			timer.stop();
+    			timer.reset();
+    			timerStart = false;
+   			}
+   		}
+    	
+   		if(timer.get() >.25){
+   			atTarget = true;
+    	}
+    	
     	return atTarget;
     	
     }// end isAtTurnTarget
