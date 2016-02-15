@@ -7,25 +7,21 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class SetShooterSpeed extends Command {
+public class StopShooter extends Command {
 
-	double m_speed;
-	
-    public SetShooterSpeed(double speed) {
+    public StopShooter() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.shooter);
-    	m_speed = speed;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.shooter.setShooterSpeed(m_speed);
+    	Robot.shooter.setShooterSpeed(0);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -40,6 +36,5 @@ public class SetShooterSpeed extends Command {
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    	end();
     }
 }

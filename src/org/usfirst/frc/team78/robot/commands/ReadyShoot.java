@@ -8,9 +8,10 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
-public class Intake extends CommandGroup {
+public class ReadyShoot extends CommandGroup {
     
-    public  Intake() {
+	
+    public  ReadyShoot() {
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
@@ -28,11 +29,22 @@ public class Intake extends CommandGroup {
         // a CommandGroup containing them would require both the chassis and the
         // arm.
     	
-    	if(Robot.intake.intakePnState == true){
-    		addParallel(new MoveIntake());
-    		Timer.delay(1);
+    	
+    	if(Robot.intake.intakePnState == true){//if up, bring it down
+    		//addSequential(new MoveIntake());
+    		addSequential(new DoNothing(2));
     	}
-    	addParallel(new SetIntakeSpeed(1));
-    	addSequential(new SetShooterSpeed(-0.25));
+    	if(Robot.shooter.shooterPnState == false){//if down, bring it up
+    		addSequential(new MoveShooter());
+    		addSequential(new DoNothing(2));
+    	}
+    	
+    	addSequential(new SetShooterSpeed(-.25));
+    	addSequential(new DoNothing(1));
+    	
+    	addSequential(new SetShooterSpeedInfinite(.9));
+    	
+
+    	
     }
 }

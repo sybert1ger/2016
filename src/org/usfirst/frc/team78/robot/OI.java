@@ -5,16 +5,21 @@ import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+import org.usfirst.frc.team78.robot.commands.AntiReadyShoot;
 import org.usfirst.frc.team78.robot.commands.DriveStraightDistance;
 import org.usfirst.frc.team78.robot.commands.DriveTime;
 import org.usfirst.frc.team78.robot.commands.DriveWithJoysticks;
 import org.usfirst.frc.team78.robot.commands.HeadingCorrection;
 import org.usfirst.frc.team78.robot.commands.Intake;
 import org.usfirst.frc.team78.robot.commands.MoveIntake;
+import org.usfirst.frc.team78.robot.commands.MovePancake;
+import org.usfirst.frc.team78.robot.commands.MoveShooter;
+import org.usfirst.frc.team78.robot.commands.ReadyShoot;
 import org.usfirst.frc.team78.robot.commands.ResetSensors;
 import org.usfirst.frc.team78.robot.commands.SetIntakeSpeed;
 import org.usfirst.frc.team78.robot.commands.SetShooterRate;
 import org.usfirst.frc.team78.robot.commands.SetShooterSpeed;
+import org.usfirst.frc.team78.robot.commands.StopShooter;
 import org.usfirst.frc.team78.robot.commands.Turn;
 
 
@@ -57,31 +62,37 @@ public class OI {
 		manipulatorStick = new Joystick(1);
 		
 		btn1 = new JoystickButton(driverStick, 1);
-		btn1.whenPressed(new Turn(90.0));
-		//btn1.whileHeld(new HeadingCorrection());
+		btn1.whileHeld(new Intake());
 		
-		//btn2 = new JoystickButton(driverStick, 2);
-		//btn2.whenPressed(new Turn(0.0));
-		//btnFiveFeet.whenPressed(new SetShooterRate(7000));
-		//btnFiveFeet.whenPressed(new DriveTime(-.75, 300));
-		//btnFiveFeet.whenPressed(new DriveStraightDistance(8));
-		//btnFiveFeet.whenReleased(new DriveWithJoysticks());
 		
 		btn2 = new JoystickButton(driverStick, 2);
-		btn2.whenPressed(new ResetSensors());
+		btn2.whenPressed(new MoveIntake());
+		//btn2.whenPressed(new ResetSensors());
 		
 		btn3 = new JoystickButton(driverStick, RobotMap.SHOOTER_PN);
-		btn3.whileHeld(new Intake());
-		
+		btn3.whenPressed(new MovePancake());
+		//btn3.whileHeld(new SetIntakeSpeed(.75));
+		//btn3.whileHeld(new SetShooterSpeed(-.3));
+				
 		btn4 = new JoystickButton(driverStick, RobotMap.INTAKE_PN);
-		btn4.whileHeld(new SetShooterSpeed(.85));
+		btn4.whileHeld(new ReadyShoot());
+		btn4.whenReleased(new AntiReadyShoot());
+		
 		
 		btn6 = new JoystickButton(driverStick, RobotMap.PANCAKE_PN);
+		btn6.whenPressed(new MoveShooter());
 		
-		btn7 = new JoystickButton(driverStick, RobotMap.INTAKE_MTR);
-		btn7.whenPressed(new MoveIntake());
+		btn5 = new JoystickButton(driverStick, 5);
+		btn5.whileHeld(new SetShooterSpeed(.9));
+		btn5.whenReleased(new StopShooter());
 		
-		btn8 = new JoystickButton(driverStick, RobotMap.SHOOTER_MTR);
+		btn8 = new JoystickButton(driverStick, 8);
+		btn8.whileHeld(new SetShooterRate(7800));
+		
+		//btn7 = new JoystickButton(driverStick, RobotMap.INTAKE_MTR);
+		//btn7.whenPressed(new MoveIntake());
+		
+		//btn8 = new JoystickButton(driverStick, RobotMap.SHOOTER_MTR);
 		
 		//btnTurn.whenPressed(new DriveTime(.75, 300));
 		//btnTurn.whenPressed(new Turn(180));

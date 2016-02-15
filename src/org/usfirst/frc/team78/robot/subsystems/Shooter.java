@@ -1,6 +1,7 @@
 package org.usfirst.frc.team78.robot.subsystems;
 
 import org.usfirst.frc.team78.robot.RobotMap;
+import org.usfirst.frc.team78.robot.commands.StopShooter;
 
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
@@ -37,8 +38,8 @@ public class Shooter extends Subsystem {
 	public boolean pancakePnState = false;
 	
 	//CONSTANTS
-	final double SHOOTER_P = .0000034;
-	final double SHOOTER_I = .0000037;
+	final double SHOOTER_P = 0.0000045;
+	final double SHOOTER_I = 0.0000009;//.0000037;
 	
 	//TIMER
 	Timer timer = new Timer();
@@ -46,6 +47,7 @@ public class Shooter extends Subsystem {
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
+    	new StopShooter();
     }
     
 //____________________________________________________________________________________________________________________________

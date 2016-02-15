@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class MovePancake extends Command {
 
 
-    public MovePancake(boolean state) {
+    public MovePancake() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.shooter);

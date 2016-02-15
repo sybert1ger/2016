@@ -2,15 +2,14 @@ package org.usfirst.frc.team78.robot.commands;
 
 import org.usfirst.frc.team78.robot.Robot;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
  *
  */
-public class Intake extends CommandGroup {
+public class AntiReadyShoot extends CommandGroup {
     
-    public  Intake() {
+    public  AntiReadyShoot() {
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
@@ -28,11 +27,19 @@ public class Intake extends CommandGroup {
         // a CommandGroup containing them would require both the chassis and the
         // arm.
     	
-    	if(Robot.intake.intakePnState == true){
-    		addParallel(new MoveIntake());
-    		Timer.delay(1);
+    	if(Robot.shooter.pancakePnState == true){//if up, bring it down
+    		addSequential(new MovePancake());
+    		addSequential(new DoNothing(1));
     	}
-    	addParallel(new SetIntakeSpeed(1));
-    	addSequential(new SetShooterSpeed(-0.25));
+    	
+    	if(Robot.shooter.shooterPnState == true){//if down, bring it up
+    		addSequential(new MoveShooter());
+    		addSequential(new DoNothing(2));
+    	}
+    	
+    	addSequential(new StopShooter());
+    	
+    	
+    	
     }
 }
