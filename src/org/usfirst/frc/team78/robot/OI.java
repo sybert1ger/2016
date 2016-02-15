@@ -10,6 +10,7 @@ import org.usfirst.frc.team78.robot.commands.DriveTime;
 import org.usfirst.frc.team78.robot.commands.DriveWithJoysticks;
 import org.usfirst.frc.team78.robot.commands.HeadingCorrection;
 import org.usfirst.frc.team78.robot.commands.Intake;
+import org.usfirst.frc.team78.robot.commands.MoveIntake;
 import org.usfirst.frc.team78.robot.commands.ResetSensors;
 import org.usfirst.frc.team78.robot.commands.SetIntakeSpeed;
 import org.usfirst.frc.team78.robot.commands.SetShooterRate;
@@ -78,7 +79,7 @@ public class OI {
 		btn6 = new JoystickButton(driverStick, RobotMap.PANCAKE_PN);
 		
 		btn7 = new JoystickButton(driverStick, RobotMap.INTAKE_MTR);
-		btn7.whenPressed(new Intake());
+		btn7.whenPressed(new MoveIntake());
 		
 		btn8 = new JoystickButton(driverStick, RobotMap.SHOOTER_MTR);
 		
