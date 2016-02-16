@@ -18,8 +18,7 @@ public class Chassis extends Subsystem {
 	Talon rightDrive1 = new Talon(RobotMap.RIGHT_DRIVE_1);
 	Talon leftDrive2 = new Talon(RobotMap.LEFT_DRIVE_2);
 	Talon rightDrive2 = new Talon(RobotMap.RIGHT_DRIVE_2);
-	
-	
+
 	
 	
 	
