@@ -54,21 +54,22 @@ public class Chassis extends Subsystem {
 	//VARIABLES
 	public Boolean timerStart = false;
 	public boolean atTarget = false;
-	public double testTarget;
+	public boolean noGoal;
 	
 	
 	//CONSTANTS
 	final double GYRO_P = (.01);
 	final double DISTANCE_P = 0.0002;
-	final double TURN_P = .0035;
+	final double VISION_GOAL = 0;
+	final double VISION_P = 0;
 
 	
 	//TIMER
 	public Timer timer = new Timer();
 	
-	public double correctTarget;
-	public double current;
-	public int step = 0;
+	
+	//public double correctTarget;
+
 	
 	
 	
@@ -102,6 +103,11 @@ public class Chassis extends Subsystem {
     }
     
     
+    public void setTurnSpeed(double speed){
+    	setSpeed(speed, -speed);
+    }
+    
+    
  //______________________________________________________________________________ 
  //AUTO METHODS  
     
@@ -123,17 +129,136 @@ public class Chassis extends Subsystem {
     		speed = -.15;
     	}
     	
-    	return speed;
-    	
     	//double driftError = getAngle();
     	//setSpeed(speed-((GYRO_P)*driftError), speed+((GYRO_P)*driftError));
+    	
+    	return speed;
+    	
     	
     }//end driveStraightDistance
     
     
+    public double headingCorrection (double heading){
+    	double driftError = heading - getAngle();
+    	
+    	if (driftError < -180){
+    		driftError = driftError + 360;
+    	}
+    	else if (driftError > 360){
+    		driftError = driftError - 360;
+    	}
+    	
+    	
+    	return ((GYRO_P)*driftError);
+    	//setSpeed(((GYRO_P)*driftError), -((GYRO_P)*driftError));
+    	
+    }//end headingCorrection
+    
+    
+    public double turnAngleAdditional(double target){
+    	double speed;
+
+    	speed = headingCorrection(target);
+    	
+    	if (speed > .7){
+    		speed = .7;
+    	}
+    	if(speed < -.7){ 
+    		speed = -.7;
+    	}
+    	
+    	if (speed < .1 && speed > 0){
+    		speed = .1;
+    	}
+    	if(speed > -.1 && speed < 0){ 
+    		speed = -.1;
+    	}
+    	
+    	return speed;
+    	//setTurnSpeed(speed);
+    }
+    
+    public double visionHeadingCorrection(){
+    	double error = (VISION_GOAL - Robot.vision.getVisionX());
+    	
+    	if (error < -180){
+    		error = error + 360;
+    	}
+    	else if (error > 360){
+    		error = error - 360;
+    	}
+    	
+    	
+    	return ((VISION_P)*error);
+    }
+    
+    public double visionTurn(){
+    	double speed;
+    	
+    	speed = visionHeadingCorrection();
+    	
+    	if (speed > .7){
+    		speed = .7;
+    	}
+    	if(speed < -.7){ 
+    		speed = -.7;
+    	}
+    	
+    	if (speed < .1 && speed > 0){
+    		speed = .1;
+    	}
+    	if(speed > -.1 && speed < 0){ 
+    		speed = -.1;
+    	}
+    	
+    	
+    	return speed;
+    }
+    
+    
+//_________________________________________________________________________________________________________________________________________
+//LOGIC METHODS
+    
+    public boolean isAtTurnTarget(double target){
+    	double correctTarget = (target % 360);
+    	atTarget = false;
+    	
+    	double error = target - getAngle();
+    	
+    	if (error < -180){
+    		error = error + 360;
+    	}
+    	else if (error > 360){
+    		error = error - 360;
+    	}
+
+    	if ((error < 3) && (error > -3)){
+    		if(timerStart == false){
+   				timerStart = true;
+   				timer.start();
+   			}
+    		
+   		}
+   	
+   		else{
+   		
+   			if(timerStart == true){
+    			timer.stop();
+    			timer.reset();
+    			timerStart = false;
+   			}
+   		}
+    	
+   		if(timer.get() >.25){
+   			atTarget = true;
+    	}
+    	
+    	return atTarget;
+    	
+    }// end isAtTurnTarget
+    
     public boolean isAtDistanceTarget(double target){
     	boolean atTarget = false;
-    	
     	double current = (getLeftEnc() + getRightEnc())/2;
     	
     	if (current < (target+75) && current > (target-75)){
@@ -162,63 +287,16 @@ public class Chassis extends Subsystem {
     	
     }// end isAtDistanceTarget
     
-    
-    public double headingCorrection (double heading){
-    	double driftError = heading - getAngle();
-    	
-    	return ((GYRO_P)*driftError);
-    	//setSpeed(((GYRO_P)*driftError), -((GYRO_P)*driftError));
-    	
-    }//end headingCorrection
-    
-    
-    public double turnAngleAdditional(double target){
-    	step = 1;
-    	double speed;
-    	double error = target - getAngle();
-    	
-    	if (error < -180){
-    		error = error + 360;
-    	}
-    	else if (error > 360){
-    		error = error - 360;
-    	}
-    	
-    	speed = TURN_P*(error);
-    	
-    	if (speed > .7){
-    		speed = .7;
-    	}
-    	if(speed < -.7){ 
-    		speed = -.7;
-    	}
-    	
-    	if (speed < .1 && speed > 0){
-    		speed = .1;
-    	}
-    	if(speed > -.1 && speed < 0){ 
-    		speed = -.1;
-    	}
-    	
-    	return speed;
-    	//setTurnSpeed(speed);
-    }
-    
-    public boolean isAtTurnTarget(double target){
-    	step = 2;
-    	correctTarget = (target % 360);
-    	atTarget = false;
-    	
-    	double error = target - getAngle();
-    	
-    	if (error < -180){
-    		error = error + 360;
-    	}
-    	else if (error > 360){
-    		error = error - 360;
-    	}
 
-    	if ((error < 5) && (error > -5)){
+    public boolean isAtVisionTarget(){
+    	
+    	double current = Robot.vision.getVisionX();
+    	
+    	if (current == 0){
+    		noGoal = true;
+    	}
+    	
+    	if ((current < (VISION_GOAL + 10)) && (current > (VISION_GOAL - 10))){
     		if(timerStart == false){
    				timerStart = true;
    				timer.start();
@@ -242,10 +320,6 @@ public class Chassis extends Subsystem {
     	return atTarget;
     	
     }// end isAtTurnTarget
-    
-    public void setTurnSpeed(double speed){
-    	setSpeed(speed, -speed);
-    }// end setTurnSpeed
 
     
  //______________________________________________________________________________ 

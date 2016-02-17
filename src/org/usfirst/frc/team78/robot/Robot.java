@@ -59,7 +59,7 @@ public class Robot extends IterativeRobot {
     	server.setQuality(50);
     	server.startAutomaticCapture("cam0");
 
-    	table = NetworkTable.getTable("datatable");
+    	table = NetworkTable.getTable("magicland");
     	
     	Compressor c = new Compressor(0);
     	c.setClosedLoopControl(true);
@@ -144,11 +144,8 @@ public class Robot extends IterativeRobot {
     	SmartDashboard.putNumber("Jetson Y", Robot.vision.getVisionY());
     	
     	//PROGRAM TESTS
-    	SmartDashboard.putNumber("Step", Robot.chassis.step);
     	SmartDashboard.putNumber("Shooter Speed", Robot.shooter.shooterSpeed);
     	SmartDashboard.putBoolean("Timer", Robot.chassis.timerStart);
-    	SmartDashboard.putNumber("CorrectTarget", Robot.chassis.correctTarget);
-    	SmartDashboard.putNumber("current", Robot.chassis.current);
     	SmartDashboard.putNumber("Rate Error", Robot.shooter.rateError);
     	SmartDashboard.putNumber("I Component", Robot.shooter.iComponent);
     	SmartDashboard.putNumber("P Component", Robot.shooter.pComponent);

@@ -44,7 +44,7 @@ public class Vision extends Subsystem {
     	//return Robot.table.getDouble("Y");
     	double Y = 0;
     	try {
-    		Y = Robot.table.getDouble("X");
+    		Y = Robot.table.getDouble("Y");
     	} catch ( Exception e){
     		return 0;
     	}

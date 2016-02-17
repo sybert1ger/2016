@@ -47,6 +47,7 @@ public class OI {
 		
 	//MANIPULATOR BUTTONS
 	public Button btn1M;
+	public Button btn2M;
 
 	
 	
@@ -89,18 +90,14 @@ public class OI {
 		btn8 = new JoystickButton(driverStick, 8);
 		btn8.whileHeld(new SetShooterRate(7800));
 		
-		//btn7 = new JoystickButton(driverStick, RobotMap.INTAKE_MTR);
-		//btn7.whenPressed(new MoveIntake());
 		
-		//btn8 = new JoystickButton(driverStick, RobotMap.SHOOTER_MTR);
+//__________________________________________________________________________________________________________________________________________
 		
-		//btnTurn.whenPressed(new DriveTime(.75, 300));
-		//btnTurn.whenPressed(new Turn(180));
-		//btnTurn.whenReleased(new DriveWithJoysticks());
+		btn1M = new JoystickButton(manipulatorStick, 1);
+		btn1M.whenPressed(new Turn(0));
 		
-		//btnSetShooterRate = new JoystickButton(camStick, 3);
-		//btnSetShooterRate.whileHeld(new SetShooterRate(5000));
-
+		btn2M = new JoystickButton(manipulatorStick, 2);
+		btn2M.whenPressed(new ResetSensors());
 	}
 	
 	///DRIVER STICK

@@ -7,40 +7,37 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class Turn extends Command {
+public class SeekGoal extends Command {
 
-	double m_angle;
-	double startAngle;
-	double target;
 	double speed;
 	
-    public Turn(double angle) {;
+    public SeekGoal() {
+        // Use requires() here to declare subsystem dependencies
+        // eg. requires(chassis);
     	requires(Robot.chassis);
-    	 m_angle = angle;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	speed = Robot.chassis.turnAngleAdditional((m_angle));
     	
+    	speed = Robot.chassis.visionTurn();
     	Robot.chassis.setTurnSpeed(speed);
+    	
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return Robot.chassis.isAtTurnTarget(m_angle);
+        return Robot.chassis.isAtVisionTarget() || Robot.chassis.noGoal;
     }
 
     // Called once after isFinished returns true
     protected void end() {
     	Robot.chassis.stopAllDrive();
-    	Robot.chassis.timerStart = false;
-    	Robot.chassis.atTarget = false;
+    	Robot.chassis.noGoal = false;
     	Robot.chassis.timer.stop();
     	Robot.chassis.timer.reset();
     }
