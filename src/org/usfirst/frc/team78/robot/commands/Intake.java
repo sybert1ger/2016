@@ -33,6 +33,6 @@ public class Intake extends CommandGroup {
     		Timer.delay(1);
     	}
     	addParallel(new SetIntakeSpeed(1));
-    	addSequential(new SetShooterSpeed(-0.25));
+    	addSequential(new SetShooterSpeed(-0.3178));
     }
 }

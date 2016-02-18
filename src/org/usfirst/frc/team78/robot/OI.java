@@ -51,7 +51,13 @@ public class OI {
 	public Button btn1M;
 	public Button btn2M;
 	public Button btn3M;
-
+	public Button btn4M;
+	public Button btn5M;
+	public Button btn6M;
+	public Button btn7M;
+	public Button btn8M;
+	public Button btn9M;
+	
 	
 	
 	//CONSTANTS
@@ -65,26 +71,29 @@ public class OI {
 		driverStick = new Joystick(0);
 		manipulatorStick = new Joystick(1);
 		
-		btn1 = new JoystickButton(driverStick, 1);
-		btn1.whileHeld(new Intake());
+		//btn1 = new JoystickButton(driverStick, 1);
+		//btn1.whileHeld(new Intake());
+		//btn1.whenReleased(new SetShooterSpeed(0));
 		
 		
-		btn2 = new JoystickButton(driverStick, 2);
-		btn2.whenPressed(new MoveIntake());
-		//btn2.whenPressed(new ResetSensors());
+		//btn2 = new JoystickButton(driverStick, 2);
+		//btn2.whenPressed(new MoveIntake());
+			//btn2.whenPressed(new ResetSensors());
 		
-		btn3 = new JoystickButton(driverStick, RobotMap.SHOOTER_PN);
-		btn3.whenPressed(new MovePancake());
-		//btn3.whileHeld(new SetIntakeSpeed(.75));
-		//btn3.whileHeld(new SetShooterSpeed(-.3));
+		//btn3 = new JoystickButton(driverStick, RobotMap.SHOOTER_PN);
+		//btn3.whenPressed(new MovePancake());
+			//btn3.whileHeld(new SetIntakeSpeed(.75));
+			//btn3.whileHeld(new SetShooterSpeed(-.3));
 				
-		btn4 = new JoystickButton(driverStick, RobotMap.INTAKE_PN);
-		btn4.whileHeld(new ReadyShoot());
-		btn4.whenReleased(new AntiReadyShoot());
+		//btn4 = new JoystickButton(driverStick, RobotMap.INTAKE_PN);
+		//btn4.whileHeld(new ReadyShoot());
+		//btn4.whenReleased(new AntiReadyShoot());
 		
 		
-		btn6 = new JoystickButton(driverStick, RobotMap.PANCAKE_PN);
-		btn6.whenPressed(new MoveShooter());
+		//btn6 = new JoystickButton(driverStick, RobotMap.PANCAKE_PN);
+		//btn6.whenPressed(new MoveShooter());
+		btn6 = new JoystickButton(driverStick, 6);
+		btn6.whileHeld(new SetIntakeSpeed(-0.75));
 		
 		btn5 = new JoystickButton(driverStick, 5);
 		btn5.whileHeld(new SetShooterSpeed(.95));
@@ -97,14 +106,30 @@ public class OI {
 //__________________________________________________________________________________________________________________________________________
 		
 		btn1M = new JoystickButton(manipulatorStick, 1);
-		btn1M.whenPressed(new Turn(0));
-		
-		btn2M = new JoystickButton(manipulatorStick, 2);
-		btn2M.whenPressed(new ResetSensors());
+		btn1M.whileHeld(new Intake());
+		btn1M.whenReleased(new SetShooterSpeed(0));
 		
 		btn3M = new JoystickButton(manipulatorStick, 3);
-		btn3M.whenPressed(new Turn(90));
-		//btn3M.whenPressed(new DriveStraightDistance(10));
+		btn3M.whenPressed(new MovePancake());
+		btn3M.whenReleased(new MovePancake());
+		
+		btn2M = new JoystickButton(manipulatorStick, 2); //spin up shooters 50%
+		btn2M.whileHeld(new SetShooterSpeed(.50));
+		btn2M.whenReleased(new StopShooter());		
+			//btn3M.whenPressed(new Turn(90));
+				//btn3M.whenPressed(new DriveStraightDistance(10));
+		btn4M = new JoystickButton(manipulatorStick, 4); //spin up shooter 85%
+		btn4M.whileHeld(new SetShooterSpeed(0.92));
+		btn4M.whenReleased(new StopShooter());
+		
+		btn5M = new JoystickButton(manipulatorStick, 5);
+		btn5M.whenPressed(new MoveIntake());
+		
+		btn6M = new JoystickButton(manipulatorStick, 6);
+		btn6M.whenPressed(new MoveShooter());
+		
+		btn9M = new JoystickButton(manipulatorStick, 9);
+		btn9M.whenPressed(new ResetSensors());
 	}
 	
 	///DRIVER STICK
