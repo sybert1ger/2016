@@ -58,17 +58,18 @@ public class Chassis extends Subsystem {
 	
 	
 	//CONSTANTS
-	final double GYRO_P = (.01);
+	final double GYRO_P = (.017);
 	final double DISTANCE_P = 0.0002;
-	final double VISION_GOAL = 0;
-	final double VISION_P = 0;
+	final double VISION_GOAL = -55;
+	final double VISION_P = .0027;
 
 	
 	//TIMER
 	public Timer timer = new Timer();
 	
 	
-	//public double correctTarget;
+	//TEST SHIT
+	public boolean didTurnStart = false;
 
 	
 	
@@ -112,7 +113,7 @@ public class Chassis extends Subsystem {
  //AUTO METHODS  
     
     public double driveStraightDistance(double distance){
-    	double distanceError = (distance - ((getLeftEnc() + getRightEnc()) / 2));
+    	double distanceError = (distance - ((getLeftEnc()))); //+ getRightEnc()) / 2));
     	double speed = distanceError*DISTANCE_P;
     	
     	if (distanceError > 3000){
@@ -167,11 +168,11 @@ public class Chassis extends Subsystem {
     		speed = -.7;
     	}
     	
-    	if (speed < .1 && speed > 0){
-    		speed = .1;
+    	if (speed < .25 && speed > 0){
+    		speed = .25;
     	}
-    	if(speed > -.1 && speed < 0){ 
-    		speed = -.1;
+    	if(speed > -.25 && speed < 0){ 
+    		speed = -.25;
     	}
     	
     	return speed;
@@ -189,12 +190,12 @@ public class Chassis extends Subsystem {
     	}
     	
     	
-    	return ((VISION_P)*error);
+    	return -((VISION_P)*error);
     }
     
     public double visionTurn(){
     	double speed;
-    	
+    	didTurnStart = true;
     	speed = visionHeadingCorrection();
     	
     	if (speed > .7){
@@ -232,7 +233,7 @@ public class Chassis extends Subsystem {
     		error = error - 360;
     	}
 
-    	if ((error < 3) && (error > -3)){
+    	if ((error < 5) && (error > -5)){
     		if(timerStart == false){
    				timerStart = true;
    				timer.start();
@@ -296,7 +297,7 @@ public class Chassis extends Subsystem {
     		noGoal = true;
     	}
     	
-    	if ((current < (VISION_GOAL + 10)) && (current > (VISION_GOAL - 10))){
+    	if ((current < (VISION_GOAL + 15)) && (current > (VISION_GOAL - 15))){
     		if(timerStart == false){
    				timerStart = true;
    				timer.start();
@@ -342,11 +343,11 @@ public class Chassis extends Subsystem {
     }
     
     public double getLeftEnc(){
-    	return -leftEnc.getRaw();
+    	return leftEnc.getRaw();
     }
     
     public double getRightEnc(){
-    	return rightEnc.getRaw();
+    	return -rightEnc.getRaw();
     }
     
     public double getUltra(){

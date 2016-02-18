@@ -16,11 +16,13 @@ import org.usfirst.frc.team78.robot.commands.MovePancake;
 import org.usfirst.frc.team78.robot.commands.MoveShooter;
 import org.usfirst.frc.team78.robot.commands.ReadyShoot;
 import org.usfirst.frc.team78.robot.commands.ResetSensors;
+import org.usfirst.frc.team78.robot.commands.SeekGoal;
 import org.usfirst.frc.team78.robot.commands.SetIntakeSpeed;
 import org.usfirst.frc.team78.robot.commands.SetShooterRate;
 import org.usfirst.frc.team78.robot.commands.SetShooterSpeed;
 import org.usfirst.frc.team78.robot.commands.StopShooter;
 import org.usfirst.frc.team78.robot.commands.Turn;
+import org.usfirst.frc.team78.robot.commands.TurnAdditional;
 
 
 
@@ -48,6 +50,7 @@ public class OI {
 	//MANIPULATOR BUTTONS
 	public Button btn1M;
 	public Button btn2M;
+	public Button btn3M;
 
 	
 	
@@ -84,11 +87,11 @@ public class OI {
 		btn6.whenPressed(new MoveShooter());
 		
 		btn5 = new JoystickButton(driverStick, 5);
-		btn5.whileHeld(new SetShooterSpeed(.9));
+		btn5.whileHeld(new SetShooterSpeed(.95));
 		btn5.whenReleased(new StopShooter());
 		
 		btn8 = new JoystickButton(driverStick, 8);
-		btn8.whileHeld(new SetShooterRate(7800));
+		btn8.whileHeld(new SetShooterRate(7200));
 		
 		
 //__________________________________________________________________________________________________________________________________________
@@ -98,6 +101,10 @@ public class OI {
 		
 		btn2M = new JoystickButton(manipulatorStick, 2);
 		btn2M.whenPressed(new ResetSensors());
+		
+		btn3M = new JoystickButton(manipulatorStick, 3);
+		btn3M.whenPressed(new Turn(90));
+		//btn3M.whenPressed(new DriveStraightDistance(10));
 	}
 	
 	///DRIVER STICK

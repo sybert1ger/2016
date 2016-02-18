@@ -149,7 +149,7 @@ public class Robot extends IterativeRobot {
     	SmartDashboard.putNumber("Rate Error", Robot.shooter.rateError);
     	SmartDashboard.putNumber("I Component", Robot.shooter.iComponent);
     	SmartDashboard.putNumber("P Component", Robot.shooter.pComponent);
-    	SmartDashboard.putNumber("Raw Gyro", Robot.chassis.getRawGyro());
+    	SmartDashboard.putBoolean("How badly did I mess up?", Robot.chassis.didTurnStart);
 
     
         	

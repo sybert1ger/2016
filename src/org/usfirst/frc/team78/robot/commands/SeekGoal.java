@@ -11,6 +11,7 @@ public class SeekGoal extends Command {
 
 	double speed;
 	
+	
     public SeekGoal() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
@@ -19,6 +20,7 @@ public class SeekGoal extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	Robot.chassis.didTurnStart = false;
     }
 
     // Called repeatedly when this Command is scheduled to run
