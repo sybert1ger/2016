@@ -8,24 +8,24 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class MoveIntake extends Command {
-    
+
+	String m_direction;
 	
-	public MoveIntake() {
+    public MoveIntake(String direction) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.intake);
-
+    	m_direction = direction;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	if (Robot.intake.intakePnState == false){
-    		Robot.intake.moveIntake(true);
-    		Robot.intake.intakePnState = true;
+    	
+    	if(m_direction == "down"){
+    		Robot.intake.intakeDown();
     	}
-    	else{
-    		Robot.intake.moveIntake(false);
-    		Robot.intake.intakePnState = false;
+    	else if(m_direction == "up"){
+    		Robot.intake.intakeUp();
     	}
     }
 

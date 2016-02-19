@@ -22,7 +22,7 @@ public class Intake extends Subsystem {
 	DoubleSolenoid lift = new DoubleSolenoid(RobotMap.INTAKE_FOREWARD, RobotMap.INTAKE_REVERSE);
 	
 	//VARIBALES
-	public boolean intakePnState = false;
+	public boolean intakePnState = false;//TRUE = DOWN
 	
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
@@ -38,12 +38,24 @@ public class Intake extends Subsystem {
     	setIntakeSpeed(0);
     }
     
-    public void moveIntake(boolean state){
+    public void intakeDown(){
+    	lift.set(DoubleSolenoid.Value.kForward);
+    	intakePnState = true;
+    }
+    
+    public void intakeUp(){
+    	lift.set(DoubleSolenoid.Value.kReverse);
+    	intakePnState = false;
+    }
+    
+    public void alternateIntake(boolean state){
     	if(state == true){
     		lift.set(DoubleSolenoid.Value.kForward);
+    		intakePnState = true;
     	}
     	else{
     		lift.set(DoubleSolenoid.Value.kReverse);
+    		intakePnState = false;
     	}
     }
    

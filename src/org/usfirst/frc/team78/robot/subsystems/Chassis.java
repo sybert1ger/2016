@@ -59,7 +59,7 @@ public class Chassis extends Subsystem {
 	
 	//CONSTANTS
 	final double GYRO_P = (.017);
-	final double DISTANCE_P = 0.0002;
+	final double DISTANCE_P = 0.00035;
 	final double VISION_GOAL = -55;
 	final double VISION_P = .0027;
 
@@ -116,18 +116,18 @@ public class Chassis extends Subsystem {
     	double distanceError = (distance - ((getLeftEnc()))); //+ getRightEnc()) / 2));
     	double speed = distanceError*DISTANCE_P;
     	
-    	if (distanceError > 3000){
-    		speed = .45;
+    	/*if (distanceError > 3000){
+    		speed = .8;
     	}
     	
-    	else if (speed > .45){
-    		speed = .45;
+    	else if (speed > .8){
+    		speed = .8;
+    	} */
+    	if (speed < .25 && speed > 0){
+    		speed = .25;
     	}
-    	else if (speed < .15 && speed > 0){
-    		speed = .15;
-    	}
-    	else if(speed > -.15 && speed < 0){
-    		speed = -.15;
+    	else if(speed > -.25 && speed < 0){
+    		speed = -.25;
     	}
     	
     	//double driftError = getAngle();
@@ -233,7 +233,7 @@ public class Chassis extends Subsystem {
     		error = error - 360;
     	}
 
-    	if ((error < 5) && (error > -5)){
+    	if ((error < 3) && (error > -3)){
     		if(timerStart == false){
    				timerStart = true;
    				timer.start();
@@ -260,7 +260,7 @@ public class Chassis extends Subsystem {
     
     public boolean isAtDistanceTarget(double target){
     	boolean atTarget = false;
-    	double current = (getLeftEnc() + getRightEnc())/2;
+    	double current = (getLeftEnc()); //+ getRightEnc())/2;
     	
     	if (current < (target+75) && current > (target-75)){
     		if(timerStart == false){
@@ -335,6 +335,7 @@ public class Chassis extends Subsystem {
     	leftEnc.reset();
     	rightEnc.reset();
     	ahrs.reset();
+    	Timer.delay(.25);
     }
     
     public void resetEncs(){

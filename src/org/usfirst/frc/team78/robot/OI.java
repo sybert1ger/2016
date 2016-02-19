@@ -5,6 +5,8 @@ import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+import org.usfirst.frc.team78.robot.commands.AlternateIntake;
+import org.usfirst.frc.team78.robot.commands.AntiIntake;
 import org.usfirst.frc.team78.robot.commands.AntiReadyShoot;
 import org.usfirst.frc.team78.robot.commands.DriveStraightDistance;
 import org.usfirst.frc.team78.robot.commands.DriveTime;
@@ -12,7 +14,8 @@ import org.usfirst.frc.team78.robot.commands.DriveWithJoysticks;
 import org.usfirst.frc.team78.robot.commands.HeadingCorrection;
 import org.usfirst.frc.team78.robot.commands.Intake;
 import org.usfirst.frc.team78.robot.commands.MoveIntake;
-import org.usfirst.frc.team78.robot.commands.MovePancake;
+import org.usfirst.frc.team78.robot.commands.AlternatePancake;
+import org.usfirst.frc.team78.robot.commands.AlternateShooter;
 import org.usfirst.frc.team78.robot.commands.MoveShooter;
 import org.usfirst.frc.team78.robot.commands.ReadyShoot;
 import org.usfirst.frc.team78.robot.commands.ResetSensors;
@@ -21,6 +24,7 @@ import org.usfirst.frc.team78.robot.commands.SetIntakeSpeed;
 import org.usfirst.frc.team78.robot.commands.SetShooterRate;
 import org.usfirst.frc.team78.robot.commands.SetShooterSpeed;
 import org.usfirst.frc.team78.robot.commands.StopShooter;
+import org.usfirst.frc.team78.robot.commands.TestCommand;
 import org.usfirst.frc.team78.robot.commands.Turn;
 import org.usfirst.frc.team78.robot.commands.TurnAdditional;
 
@@ -35,6 +39,7 @@ public class OI {
 	//JOYSTICKS
 	public Joystick driverStick;
 	public Joystick manipulatorStick;
+	public Joystick tStick;
 	
 	
 	//DRIVER BUTTONS
@@ -58,6 +63,17 @@ public class OI {
 	public Button btn8M;
 	public Button btn9M;
 	
+	//TEST STICK
+	public Button btn1T;
+	public Button btn2T;
+	public Button btn3T;
+	public Button btn4T;
+	public Button btn5T;
+	public Button btn6T;
+	public Button btn7T;
+	public Button btn8T;
+	public Button btn9T;
+	
 	
 	
 	//CONSTANTS
@@ -70,6 +86,7 @@ public class OI {
 	public OI(){
 		driverStick = new Joystick(0);
 		manipulatorStick = new Joystick(1);
+		tStick = new Joystick(2);
 		
 		//btn1 = new JoystickButton(driverStick, 1);
 		//btn1.whileHeld(new Intake());
@@ -110,8 +127,8 @@ public class OI {
 		btn1M.whenReleased(new SetShooterSpeed(0));
 		
 		btn3M = new JoystickButton(manipulatorStick, 3);
-		btn3M.whenPressed(new MovePancake());
-		btn3M.whenReleased(new MovePancake());
+		btn3M.whenPressed(new AlternatePancake());
+		btn3M.whenReleased(new AlternatePancake());
 		
 		btn2M = new JoystickButton(manipulatorStick, 2); //spin up shooters 50%
 		btn2M.whileHeld(new SetShooterSpeed(.50));
@@ -123,13 +140,46 @@ public class OI {
 		btn4M.whenReleased(new StopShooter());
 		
 		btn5M = new JoystickButton(manipulatorStick, 5);
-		btn5M.whenPressed(new MoveIntake());
+		//btn5M.whenPressed(new MoveIntake());
 		
 		btn6M = new JoystickButton(manipulatorStick, 6);
-		btn6M.whenPressed(new MoveShooter());
+		btn6M.whenPressed(new AlternateShooter());
 		
 		btn9M = new JoystickButton(manipulatorStick, 9);
 		btn9M.whenPressed(new ResetSensors());
+		
+		
+//__________________________________________________________________________________________________________________________________________
+	
+		btn1T = new JoystickButton(tStick, 1);
+		btn1T.whenPressed(new AlternatePancake());
+		//btn1T.whileHeld(new Intake());
+		//btn1T.whenReleased(new AntiIntake());
+		//btn1T.whenPressed(new Turn(90));
+		
+		btn2T = new JoystickButton(tStick, 2);
+		btn2T.whenPressed(new AlternateIntake());
+		//btn2T.whenPressed(new MoveShooter("up"));
+		
+		btn3T = new JoystickButton(tStick, 3);
+		btn3T.whenPressed(new AlternateShooter());
+		
+		btn4T = new JoystickButton(tStick, 4);
+		btn4T.whenPressed(new MoveShooter("down"));
+		
+		/*//btn1T.whenPressed(new TestCommand());
+		
+		/*btn1T = new JoystickButton(tStick, 1);
+		btn1T.whenPressed(new MoveIntake("down"));
+		
+		btn2T = new JoystickButton(tStick, 1);
+		btn2T.whenPressed(new MoveIntake("up"));
+		
+		btn3T = new JoystickButton(tStick, 2);
+		btn2T.whenPressed(new AlternateIntake());*/
+		
+		
+		
 	}
 	
 	///DRIVER STICK

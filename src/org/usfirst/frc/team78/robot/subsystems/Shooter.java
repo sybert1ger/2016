@@ -34,8 +34,8 @@ public class Shooter extends Subsystem {
 	public double iComponent = 0;
 	public double rateError;
 	boolean timerStart = false;
-	public boolean shooterPnState = false;
-	public boolean pancakePnState = false;
+	public boolean shooterPnState = false; //TRUE = UP
+	public boolean pancakePnState = false; //TRUE = UP
 	
 	//CONSTANTS
 	final double SHOOTER_P = 0.0000045;
@@ -123,21 +123,47 @@ public class Shooter extends Subsystem {
 //____________________________________________________________________________________________________________________________________________
 //pnumatic methods
     
+    public void shooterDown(){
+    	lift.set(DoubleSolenoid.Value.kReverse);
+    	shooterPnState = true;
+    }
+    
+    public void shooterUp(){
+    	lift.set(DoubleSolenoid.Value.kForward);
+    	shooterPnState = false;
+    }
+    
+    
     public void moveShooter(boolean state){
     	if(state == true){
-    		lift.set(DoubleSolenoid.Value.kForward);
+    		lift.set(DoubleSolenoid.Value.kReverse);
+    		shooterPnState = true;
     	}
     	else{
-    		lift.set(DoubleSolenoid.Value.kReverse);
+    		lift.set(DoubleSolenoid.Value.kForward);
+    		shooterPnState = false;
     	}
     }
     
-    public void movePancake(boolean state){
+    public void pancakeIn(){
+    	pan.set(DoubleSolenoid.Value.kReverse);
+    	pancakePnState = false;
+    }
+    
+    public void pancakeOut(){
+    	pan.set(DoubleSolenoid.Value.kForward);
+    	pancakePnState = true;
+    }
+    
+    
+    public void alternatePancake(boolean state){
     	if(state == true){
     		pan.set(DoubleSolenoid.Value.kForward);
+    		pancakePnState = true;
     	}
     	else{
     		pan.set(DoubleSolenoid.Value.kReverse);
+    		pancakePnState = false;
     	}
     }
     

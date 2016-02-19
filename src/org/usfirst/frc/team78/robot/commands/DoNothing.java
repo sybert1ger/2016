@@ -7,10 +7,10 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class DoNothing extends Command {
 
-    public DoNothing(int time) {
+    public DoNothing(double d) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	setTimeout(time);
+    	setTimeout(d);
     }
 
     // Called just before this Command runs the first time

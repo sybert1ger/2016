@@ -63,9 +63,9 @@ public class Robot extends IterativeRobot {
     	
     	Compressor c = new Compressor(0);
     	c.setClosedLoopControl(true);
-    	intake.moveIntake(intake.intakePnState);
-    	shooter.movePancake(shooter.pancakePnState);
-    	shooter.moveShooter(intake.intakePnState);
+    	intake.intakeDown();
+    	shooter.pancakeIn();
+    	shooter.shooterDown();
   
     }
 	
@@ -150,7 +150,9 @@ public class Robot extends IterativeRobot {
     	SmartDashboard.putNumber("Rate Error", Robot.shooter.rateError);
     	SmartDashboard.putNumber("I Component", Robot.shooter.iComponent);
     	SmartDashboard.putNumber("P Component", Robot.shooter.pComponent);
-    	SmartDashboard.putBoolean("How badly did I mess up?", Robot.chassis.didTurnStart);
+    	SmartDashboard.putBoolean("Intake", Robot.intake.intakePnState);
+    	SmartDashboard.putBoolean("Shooter", Robot.shooter.shooterPnState);
+    	SmartDashboard.putBoolean("Pancake", Robot.shooter.pancakePnState);
 
     
         	

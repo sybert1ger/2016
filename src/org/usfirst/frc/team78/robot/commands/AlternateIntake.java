@@ -7,26 +7,28 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class MovePancake extends Command {
-
-	String m_direction;
+public class AlternateIntake extends Command {
+   
 	
-    public MovePancake(String direction) {
+	public AlternateIntake() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(Robot.shooter);
-    	m_direction = direction;
+    	requires(Robot.intake);
+
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
     	
-    	if(m_direction == "out"){
-    		Robot.shooter.pancakeOut();
-    	}
-    	else if(m_direction == "in"){
-    		Robot.shooter.pancakeIn();
-    	}
+    if (Robot.intake.intakePnState == false){
+		Robot.intake.alternateIntake(true);
+		//Robot.intake.intakePnState = true;
+	}
+	else{
+		Robot.intake.alternateIntake(false);
+		//Robot.intake.intakePnState = false;
+	}
+    	
     	
     }
 
@@ -36,7 +38,7 @@ public class MovePancake extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return true;
     }
 
     // Called once after isFinished returns true

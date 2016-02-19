@@ -28,12 +28,12 @@ public class AntiReadyShoot extends CommandGroup {
         // arm.
     	
     	if(Robot.shooter.pancakePnState == true){//if up, bring it down
-    		addSequential(new MovePancake());
+    		addSequential(new AlternatePancake());
     		addSequential(new DoNothing(1));
     	}
     	
     	if(Robot.shooter.shooterPnState == true){//if down, bring it up
-    		addSequential(new MoveShooter());
+    		addSequential(new AlternateShooter());
     		addSequential(new DoNothing(2));
     	}
     	

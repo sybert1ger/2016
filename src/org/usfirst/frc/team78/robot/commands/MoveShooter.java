@@ -9,30 +9,28 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class MoveShooter extends Command {
 
-
+	String m_direction;
 	
-    public MoveShooter() {
+    public MoveShooter(String direction) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.shooter);
-
+    	m_direction = direction;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	if (Robot.shooter.shooterPnState == false){
-    		Robot.shooter.moveShooter(true);
-    		Robot.shooter.shooterPnState = true;
+    	
+    	if(m_direction == "down"){
+    		Robot.shooter.shooterDown();
     	}
-    	else{
-    		Robot.shooter.moveShooter(false);
-    		Robot.shooter.shooterPnState = false;
+    	else if(m_direction == "up"){
+    		Robot.shooter.shooterUp();
     	}
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-
     }
 
     // Make this return true when this Command no longer needs to run execute()

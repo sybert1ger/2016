@@ -28,11 +28,8 @@ public class Intake extends CommandGroup {
         // a CommandGroup containing them would require both the chassis and the
         // arm.
     	
-    	if(Robot.intake.intakePnState == true){
-    		addParallel(new MoveIntake());
-    		Timer.delay(1);
-    	}
-    	addParallel(new SetIntakeSpeed(1));
-    	addSequential(new SetShooterSpeed(-0.3178));
+    	addSequential(new MoveIntake("down"));
+    	addSequential(new SetIntakeSpeed(1));
+    	addSequential(new SetShooterSpeed(-0.35));
     }
 }
