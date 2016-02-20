@@ -92,7 +92,7 @@ public class Chassis extends Subsystem {
     	double right = Robot.oi.getDriverRightStick();
     	
     	if (Robot.oi.driverStick.getRawButton(7)){
-    		setSpeed(left*0.3, right*0.3);
+    		setSpeed(left*0.6, right*0.6);
     	}
     	else{
     	setSpeed(left*1, right*1);

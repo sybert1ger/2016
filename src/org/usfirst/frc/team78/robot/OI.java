@@ -14,11 +14,13 @@ import org.usfirst.frc.team78.robot.commands.DriveWithJoysticks;
 import org.usfirst.frc.team78.robot.commands.HeadingCorrection;
 import org.usfirst.frc.team78.robot.commands.Intake;
 import org.usfirst.frc.team78.robot.commands.MoveIntake;
+import org.usfirst.frc.team78.robot.commands.PortCoooolis;
 import org.usfirst.frc.team78.robot.commands.PunchPancake;
 import org.usfirst.frc.team78.robot.commands.AlternateShooter;
 import org.usfirst.frc.team78.robot.commands.MoveShooter;
 import org.usfirst.frc.team78.robot.commands.LowGoal;
 import org.usfirst.frc.team78.robot.commands.ReadyShoot;
+import org.usfirst.frc.team78.robot.commands.ReadyShoot90;
 import org.usfirst.frc.team78.robot.commands.ResetSensors;
 import org.usfirst.frc.team78.robot.commands.SeekGoal;
 import org.usfirst.frc.team78.robot.commands.SetIntakeSpeed;
@@ -42,6 +44,7 @@ public class OI {
 	public Joystick driverStick;
 	public Joystick manipulatorStick;
 	public Joystick tStick;
+	public Joystick weekZeroMStick;
 	
 	
 	//DRIVER BUTTONS
@@ -76,6 +79,17 @@ public class OI {
 	public Button btn8T;
 	public Button btn9T;
 	
+	//WEEK ZERO MISTAKES STICK
+	public Button btn1W;
+	public Button btn2W;
+	public Button btn3W;
+	public Button btn4W;
+	public Button btn5W;
+	public Button btn6W;
+	public Button btn7W;
+	public Button btn8W;
+	public Button btn9W;
+	
 	
 	
 	//CONSTANTS
@@ -87,39 +101,55 @@ public class OI {
 	
 	public OI(){
 		driverStick = new Joystick(0);
-		manipulatorStick = new Joystick(1);
+		manipulatorStick = new Joystick(3);
 		tStick = new Joystick(2);
+		weekZeroMStick = new Joystick(1);
 		
-		//btn1 = new JoystickButton(driverStick, 1);
-		//btn1.whileHeld(new Intake());
-		//btn1.whenReleased(new SetShooterSpeed(0));
-		
-		
-		//btn2 = new JoystickButton(driverStick, 2);
-		//btn2.whenPressed(new MoveIntake());
-			//btn2.whenPressed(new ResetSensors());
-		
-		//btn3 = new JoystickButton(driverStick, RobotMap.SHOOTER_PN);
-		//btn3.whenPressed(new MovePancake());
-			//btn3.whileHeld(new SetIntakeSpeed(.75));
-			//btn3.whileHeld(new SetShooterSpeed(-.3));
-				
-		//btn4 = new JoystickButton(driverStick, RobotMap.INTAKE_PN);
-		//btn4.whileHeld(new ReadyShoot());
-		//btn4.whenReleased(new AntiReadyShoot());
-		
-		
-		//btn6 = new JoystickButton(driverStick, RobotMap.PANCAKE_PN);
-		//btn6.whenPressed(new MoveShooter());
 		btn6 = new JoystickButton(driverStick, 6);
-		btn6.whileHeld(new SetIntakeSpeed(-0.75));
+		btn6.whileHeld(new PortCoooolis());
 		
-		btn5 = new JoystickButton(driverStick, 5);
-		btn5.whileHeld(new SetShooterSpeed(.95));
-		btn5.whenReleased(new StopShooter());
+//__________________________________________________________________________________________________________________________________
+//WEEK ZERO WEIRD TEMPORARY BUTTONS
 		
-		btn8 = new JoystickButton(driverStick, 8);
-		btn8.whileHeld(new SetShooterRate(7200));
+		btn1W = new JoystickButton(weekZeroMStick, 1);
+		btn1W.whenPressed(new Intake());
+		btn1W.whenReleased(new SetShooterSpeed(0));
+		
+		btn6W = new JoystickButton(weekZeroMStick, 6);
+		btn6W.whenPressed(new MoveShooter("up"));
+		btn6W.whenReleased(new MoveShooter("down"));
+		
+		btn5W = new JoystickButton(weekZeroMStick, 5);
+		btn5W.whenPressed(new AlternateIntake());
+		
+		btn4W = new JoystickButton(weekZeroMStick, 4);
+		btn4W.whenPressed(new ReadyShoot());
+		btn4W.whenReleased(new AntiReadyShoot());
+					
+		btn3W = new JoystickButton(weekZeroMStick, 3);
+		btn3W.whenPressed(new PunchPancake());
+		
+		btn2W = new JoystickButton(weekZeroMStick, 2);
+		btn2W.whenPressed(new ReadyShoot90());
+		btn2W.whenReleased(new AntiReadyShoot());
+		
+		btn7W = new JoystickButton(weekZeroMStick, 7);
+		btn7W.whileHeld(new StUCK());
+		
+		btn8W = new JoystickButton(weekZeroMStick, 8);
+		btn8W.whenPressed(new LowGoal());
+		btn8W.whenReleased(new SetShooterSpeed(0));
+		
+		
+		//btn6W = new JoystickButton(weekZeroMStick, 6);
+		//btn6W.whenPressed(new SetIntakeSpeed(.5));
+		
+		
+		//toggle intake
+		//toggle shooter
+		//spin up 
+		//fire
+		
 		
 		
 //__________________________________________________________________________________________________________________________________________
@@ -127,7 +157,7 @@ public class OI {
 		btn1M = new JoystickButton(manipulatorStick, 1);
 		//btn1M.whileHeld(command);
 		btn1M.whenPressed(new Intake());
-		btn1M.whenReleased(new AntiReadyShoot());
+		btn1M.whenReleased(new AntiIntake());
 		
 		btn3M = new JoystickButton(manipulatorStick, 3);
 		btn3M.whenPressed(new PunchPancake());
@@ -137,16 +167,20 @@ public class OI {
 		btn4M.whenPressed(new ReadyShoot());
 		btn4M.whenReleased(new AntiReadyShoot());
 		
-		btn2M = new JoystickButton(manipulatorStick, 2);
-		btn2M.whileHeld(new StUCK());
+		btn2M = new JoystickButton(manipulatorStick, 2); //spin up shooters 50%
+		btn2M.whenPressed(new ReadyShoot90());
+		btn2M.whenReleased(new AntiReadyShoot());
+		
+				
+		btn7M = new JoystickButton(manipulatorStick, 7);
+		btn7M.whileHeld(new StUCK());
 		//btn2M.whenReleased(new SetIntakeSpeed(0));
 		
-		/*btn2M = new JoystickButton(manipulatorStick, 2); //spin up shooters 50%
-		btn2M.whileHeld(new SetShooterSpeed(.50));
-		btn2M.whenReleased(new StopShooter());		
+		
+		
 			//btn3M.whenPressed(new Turn(90));
 				//btn3M.whenPressed(new DriveStraightDistance(10));
-		btn4M = new JoystickButton(manipulatorStick, 4); //spin up shooter 85%
+		/*btn4M = new JoystickButton(manipulatorStick, 4); //spin up shooter 85%
 		btn4M.whileHeld(new SetShooterSpeed(1));
 		btn4M.whenReleased(new StopShooter());*/
 		
@@ -158,6 +192,7 @@ public class OI {
 		
 		btn8M = new JoystickButton(manipulatorStick, 8);
 		btn8M.whileHeld(new LowGoal());
+		btn8M.whenReleased(new SetShooterSpeed(0));
 		//btn8M.whenReleased(new SetShooterSpeed(0));
 		
 		//btn9M = new JoystickButton(manipulatorStick, 9);

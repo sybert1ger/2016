@@ -27,6 +27,7 @@ public class AntiIntake extends CommandGroup {
     	
     	
     	addSequential(new SetShooterSpeed(0));
+    	addSequential(new MoveIntake("up"));
     	
  
     }

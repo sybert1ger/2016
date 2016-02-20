@@ -29,7 +29,7 @@ public class AntiReadyShoot extends CommandGroup {
     	
 
     	addSequential(new SetShooterSpeed(0));
-    	addSequential(new MoveShooter("down"));
+    	//addSequential(new MoveShooter("down"));
     	
     	
     }

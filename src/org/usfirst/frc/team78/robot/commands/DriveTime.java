@@ -11,7 +11,7 @@ public class DriveTime extends Command {
 	
 	double m_speed;
 	
-    public DriveTime(double speed, int time) {
+    public DriveTime(double speed, double time) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.chassis);
