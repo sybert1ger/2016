@@ -48,7 +48,7 @@ public class Robot extends IterativeRobot {
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
      */
-    public void robotInit() {
+    public void robotInit() {//read about ahrs reset, fix slow mode
 		oi = new OI();
         chooser = new SendableChooser();
         chooser.addDefault("Default Auto", new DoNothing(3));

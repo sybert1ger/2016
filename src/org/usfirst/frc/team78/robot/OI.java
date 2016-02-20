@@ -24,6 +24,7 @@ import org.usfirst.frc.team78.robot.commands.SeekGoal;
 import org.usfirst.frc.team78.robot.commands.SetIntakeSpeed;
 import org.usfirst.frc.team78.robot.commands.SetShooterRate;
 import org.usfirst.frc.team78.robot.commands.SetShooterSpeed;
+import org.usfirst.frc.team78.robot.commands.StUCK;
 import org.usfirst.frc.team78.robot.commands.StopShooter;
 import org.usfirst.frc.team78.robot.commands.TestCommand;
 import org.usfirst.frc.team78.robot.commands.Turn;
@@ -136,6 +137,9 @@ public class OI {
 		btn4M.whenPressed(new ReadyShoot());
 		btn4M.whenReleased(new AntiReadyShoot());
 		
+		btn2M = new JoystickButton(manipulatorStick, 2);
+		btn2M.whileHeld(new StUCK());
+		//btn2M.whenReleased(new SetIntakeSpeed(0));
 		
 		/*btn2M = new JoystickButton(manipulatorStick, 2); //spin up shooters 50%
 		btn2M.whileHeld(new SetShooterSpeed(.50));
