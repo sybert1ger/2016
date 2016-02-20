@@ -87,9 +87,16 @@ public class Chassis extends Subsystem {
  //DRIVE METHODS
     
     public void driveWithJoysticks(){
+    	
     	double left = Robot.oi.getDriverLeftStick();
     	double right = Robot.oi.getDriverRightStick();
+    	
+    	if (Robot.oi.driverStick.getRawButton(7)){
+    		setSpeed(left*0.3, right*0.3);
+    	}
+    	else{
     	setSpeed(left*1, right*1);
+    	}
     }
     
     public void setSpeed(double left, double right){

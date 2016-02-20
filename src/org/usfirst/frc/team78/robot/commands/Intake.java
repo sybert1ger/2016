@@ -29,7 +29,7 @@ public class Intake extends CommandGroup {
         // arm.
     	
     	addSequential(new MoveIntake("down"));
-    	addSequential(new SetIntakeSpeed(1));
+    	addParallel(new SetIntakeSpeed(.5));
     	addSequential(new SetShooterSpeed(-0.35));
     }
 }

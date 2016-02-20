@@ -14,9 +14,10 @@ import org.usfirst.frc.team78.robot.commands.DriveWithJoysticks;
 import org.usfirst.frc.team78.robot.commands.HeadingCorrection;
 import org.usfirst.frc.team78.robot.commands.Intake;
 import org.usfirst.frc.team78.robot.commands.MoveIntake;
-import org.usfirst.frc.team78.robot.commands.AlternatePancake;
+import org.usfirst.frc.team78.robot.commands.PunchPancake;
 import org.usfirst.frc.team78.robot.commands.AlternateShooter;
 import org.usfirst.frc.team78.robot.commands.MoveShooter;
+import org.usfirst.frc.team78.robot.commands.LowGoal;
 import org.usfirst.frc.team78.robot.commands.ReadyShoot;
 import org.usfirst.frc.team78.robot.commands.ResetSensors;
 import org.usfirst.frc.team78.robot.commands.SeekGoal;
@@ -123,36 +124,46 @@ public class OI {
 //__________________________________________________________________________________________________________________________________________
 		
 		btn1M = new JoystickButton(manipulatorStick, 1);
-		btn1M.whileHeld(new Intake());
-		btn1M.whenReleased(new SetShooterSpeed(0));
+		//btn1M.whileHeld(command);
+		btn1M.whenPressed(new Intake());
+		btn1M.whenReleased(new AntiReadyShoot());
 		
 		btn3M = new JoystickButton(manipulatorStick, 3);
-		btn3M.whenPressed(new AlternatePancake());
-		btn3M.whenReleased(new AlternatePancake());
+		btn3M.whenPressed(new PunchPancake());
+		//btn3M.whenReleased(new AlternatePancake());
 		
-		btn2M = new JoystickButton(manipulatorStick, 2); //spin up shooters 50%
+		btn4M = new JoystickButton(manipulatorStick, 4); 
+		btn4M.whenPressed(new ReadyShoot());
+		btn4M.whenReleased(new AntiReadyShoot());
+		
+		
+		/*btn2M = new JoystickButton(manipulatorStick, 2); //spin up shooters 50%
 		btn2M.whileHeld(new SetShooterSpeed(.50));
 		btn2M.whenReleased(new StopShooter());		
 			//btn3M.whenPressed(new Turn(90));
 				//btn3M.whenPressed(new DriveStraightDistance(10));
 		btn4M = new JoystickButton(manipulatorStick, 4); //spin up shooter 85%
-		btn4M.whileHeld(new SetShooterSpeed(0.92));
-		btn4M.whenReleased(new StopShooter());
+		btn4M.whileHeld(new SetShooterSpeed(1));
+		btn4M.whenReleased(new StopShooter());*/
 		
 		btn5M = new JoystickButton(manipulatorStick, 5);
-		//btn5M.whenPressed(new MoveIntake());
+		btn5M.whenPressed(new AlternateIntake());
 		
 		btn6M = new JoystickButton(manipulatorStick, 6);
 		btn6M.whenPressed(new AlternateShooter());
 		
-		btn9M = new JoystickButton(manipulatorStick, 9);
-		btn9M.whenPressed(new ResetSensors());
+		btn8M = new JoystickButton(manipulatorStick, 8);
+		btn8M.whileHeld(new LowGoal());
+		//btn8M.whenReleased(new SetShooterSpeed(0));
+		
+		//btn9M = new JoystickButton(manipulatorStick, 9);
+		//btn9M.whenPressed(new ResetSensors());
 		
 		
 //__________________________________________________________________________________________________________________________________________
 	
 		btn1T = new JoystickButton(tStick, 1);
-		btn1T.whenPressed(new AlternatePancake());
+		btn1T.whenPressed(new PunchPancake());
 		//btn1T.whileHeld(new Intake());
 		//btn1T.whenReleased(new AntiIntake());
 		//btn1T.whenPressed(new Turn(90));

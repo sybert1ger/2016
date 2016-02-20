@@ -25,8 +25,9 @@ public class AntiIntake extends CommandGroup {
         // a CommandGroup containing them would require both the chassis and the
         // arm.
     	
-    	addSequential(new SetIntakeSpeed(0));
+    	
     	addSequential(new SetShooterSpeed(0));
+    	
  
     }
 }

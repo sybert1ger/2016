@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 
 import org.usfirst.frc.team78.robot.commands.DoNothing;
+import org.usfirst.frc.team78.robot.commands.WeekZeroAuto;
 import org.usfirst.frc.team78.robot.subsystems.Chassis;
 import org.usfirst.frc.team78.robot.subsystems.Intake;
 import org.usfirst.frc.team78.robot.subsystems.Shooter;
@@ -52,6 +53,7 @@ public class Robot extends IterativeRobot {
         chooser = new SendableChooser();
         chooser.addDefault("Default Auto", new DoNothing(3));
 //        chooser.addObject("My Auto", new MyAutoCommand());
+        	chooser.addObject("Week Zero", new WeekZeroAuto());
         SmartDashboard.putData("Auto mode", chooser);
     	
         CameraServer server;
@@ -63,9 +65,11 @@ public class Robot extends IterativeRobot {
     	
     	Compressor c = new Compressor(0);
     	c.setClosedLoopControl(true);
-    	intake.intakeDown();
+    	intake.intakeUp();
     	shooter.pancakeIn();
     	shooter.shooterDown();
+    	
+    	chassis.resetSensorData();
   
     }
 	

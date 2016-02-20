@@ -27,18 +27,9 @@ public class AntiReadyShoot extends CommandGroup {
         // a CommandGroup containing them would require both the chassis and the
         // arm.
     	
-    	if(Robot.shooter.pancakePnState == true){//if up, bring it down
-    		addSequential(new AlternatePancake());
-    		addSequential(new DoNothing(1));
-    	}
-    	
-    	if(Robot.shooter.shooterPnState == true){//if down, bring it up
-    		addSequential(new AlternateShooter());
-    		addSequential(new DoNothing(2));
-    	}
-    	
-    	addSequential(new StopShooter());
-    	
+
+    	addSequential(new SetShooterSpeed(0));
+    	addSequential(new MoveShooter("down"));
     	
     	
     }

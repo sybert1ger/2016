@@ -121,27 +121,27 @@ public class Shooter extends Subsystem {
     	leftEnc.reset();
     }
 //____________________________________________________________________________________________________________________________________________
-//pnumatic methods
+//pneumatic methods
     
     public void shooterDown(){
     	lift.set(DoubleSolenoid.Value.kReverse);
-    	shooterPnState = true;
+    	shooterPnState = false;
     }
     
     public void shooterUp(){
     	lift.set(DoubleSolenoid.Value.kForward);
-    	shooterPnState = false;
+    	shooterPnState = true;
     }
     
     
     public void moveShooter(boolean state){
-    	if(state == true){
+    	if(state == false){
     		lift.set(DoubleSolenoid.Value.kReverse);
-    		shooterPnState = true;
+    		shooterPnState = false;
     	}
     	else{
     		lift.set(DoubleSolenoid.Value.kForward);
-    		shooterPnState = false;
+    		shooterPnState = true;
     	}
     }
     

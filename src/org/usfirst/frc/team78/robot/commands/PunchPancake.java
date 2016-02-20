@@ -2,15 +2,16 @@ package org.usfirst.frc.team78.robot.commands;
 
 import org.usfirst.frc.team78.robot.Robot;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class AlternatePancake extends Command {
+public class PunchPancake extends Command {
 
 
-    public AlternatePancake() {
+    public PunchPancake() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.shooter);
@@ -19,12 +20,10 @@ public class AlternatePancake extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	if (Robot.shooter.pancakePnState == false){
-    		Robot.shooter.alternatePancake(true);
-    	}
-    	else{
-    		Robot.shooter.alternatePancake(false);
-    	}
+
+    	Robot.shooter.pancakeOut();
+    	Timer.delay(.5);
+    	Robot.shooter.pancakeIn();
     }
 
     // Called repeatedly when this Command is scheduled to run
